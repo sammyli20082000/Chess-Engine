@@ -1,6 +1,7 @@
 package Piece;
 
 import java.util.ArrayList;
+import Board.Point;
 
 public class Chariot extends Piece {
 	public Chariot(int side, int PosX, int PosY){
@@ -8,9 +9,7 @@ public class Chariot extends Piece {
 	}
 
 	@Override
-	ArrayList move() {
-		for(int )
-		
+	public ArrayList<Point> move(){
 		return null;
 	}
 }

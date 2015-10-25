@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+import Board.Board;
 
 public class Node {
-	State s;
-	Node parrentXq;
+	Node prev;
 	String action;
 	int cost;
 	int depth;
+	State state;
 }

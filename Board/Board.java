@@ -1,16 +1,23 @@
 package Board;
-
+import java.util.ArrayList;
 import Piece.Piece;
 
 public class Board {
-	Piece[][] points = new Piece[9][10];
+	ArrayList <Point> points;
 
-	public void addPiece(Piece p, int posX, int posY) {
-		points[posX][posY] = p;
+	public Board(){
+		points = new ArrayList<Point>();
+	}
+	
+	public void addPoint(Point p) {
+		points.add(p);
+	}
+	
+	public void addPoints(ArrayList <Point> p){
+		this.points = p;
 	}
 
-	public void movePiece(int oldX, int oldY, int newX, int newY) {
-		points[newX][newY] = points[oldX][oldY];
-		points[oldX][oldY] = null;
+	public Point getPointByID(int id){
+		return new Point(0, 0, 0);
 	}
 }

@@ -1,7 +1,9 @@
 
-public class AI {
+public class AI{
+	Game game;
 	
-	public AI(){
-
+	public AI(Game g){
+		game = g;
 	}
+	
 }

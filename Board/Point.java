@@ -1,15 +1,14 @@
 package Board;
-
 import java.util.*;
-
 import Piece.Piece;
 
 public class Point {
+	int id;
 	Map<Integer, Point> edges = new HashMap<Integer, Point>();
-	Piece pieceHolding;
-	int posX, posY;
+	double posX, posY; // 0 to 1, position on graphe
 	
-	public Point(int posX, int posY){
+	public Point(int id, double posX, double posY){
+		this.id = id;
 		this.posX = posX;
 		this.posY = posY;
 	}
