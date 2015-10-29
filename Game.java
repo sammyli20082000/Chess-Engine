@@ -28,37 +28,37 @@ public class Game {
                 programTerminate();
                 break;
             case UIHandler.EVENT_NEW_GAME:
-                ui.updateStatus("new game");
+                ui.updateStatus("New game");
                 break;
             case UIHandler.EVENT_LOAD_GAME:
-                ui.updateStatus("load game");
+                ui.updateStatus("Load game");
                 break;
             case UIHandler.EVENT_SAVE_GAME:
-                ui.updateStatus("save game");
+                ui.updateStatus("Save game");
                 break;
             case UIHandler.EVENT_STEP_UNDO:
-                ui.updateStatus("step undo");
+                ui.updateStatus("Step undo");
                 break;
             case UIHandler.EVENT_STEP_REDO:
-                ui.updateStatus("step redo");
+                ui.updateStatus("Step redo");
                 break;
             case UIHandler.EVENT_GAME_DISTRIBUTE_COMPUTING:
-                ui.updateStatus("distribute computing");
+                ui.updateStatus("Distributed computing");
                 break;
             case UIHandler.EVENT_VIEW_DETAIL_SYSTEM_INFO:
-                ui.updateStatus("detail system information");
+                ui.updateStatus("Detailed system information");
                 break;
             case UIHandler.EVENT_VIEW_AI_THINKING_STEP:
                 ui.updateStatus("AI thinking step");
                 break;
             case UIHandler.EVENT_VIEW_GAME_TREE:
-                ui.updateStatus("game tree");
+                ui.updateStatus("Game tree");
                 break;
             case UIHandler.EVENT_HELP_ABOUT:
-                ui.updateStatus("about");
+                ui.updateStatus("About");
                 break;
             case UIHandler.EVENT_HELP_TUTORIAL:
-                ui.updateStatus("tutorial");
+                ui.updateStatus("Tutorial");
                 break;
         }
     }

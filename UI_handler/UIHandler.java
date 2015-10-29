@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,6 +42,7 @@ public class UIHandler {
     private JFrame main_window;
     private JLabel status_text;
     private JPanel status_bar;
+    private InfoScrollPanelHandler info_panel;
     private eventCallBack myCallBack;
 
     //------------------------------public callback template------------------------------
@@ -52,6 +54,7 @@ public class UIHandler {
         main_window = new JFrame(app_name);
         status_bar = new JPanel();
         status_text = new JLabel("Ready");
+        info_panel = new InfoScrollPanelHandler();
         setupMainWindow();
     }
 
@@ -68,11 +71,13 @@ public class UIHandler {
             }
         });
         status_bar.setLayout(new FlowLayout(FlowLayout.LEADING));
-        status_bar.setBackground(Color.white);
+        status_bar.setBackground(new Color(232, 232, 232));
         status_bar.add(status_text);
+        status_bar.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(143, 143, 143)));
 
         main_window.setJMenuBar((new MenuBarHandler(this)).getJMenuBar());
         main_window.add(status_bar, BorderLayout.PAGE_END);
+        main_window.add(info_panel.getJPanel(), BorderLayout.LINE_END);
 
         main_window.setVisible(true);
     }
