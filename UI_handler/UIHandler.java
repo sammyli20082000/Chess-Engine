@@ -16,21 +16,23 @@ import Board.Board;
 
 public class UIHandler {
     //------------------------------callback message code------------------------------
-    public static final int
-            EVENT_PIECE_SELECTED = 1001,
-            EVENT_WINDOW_CLOSING = 1002,
-            EVENT_NEW_GAME = 1003,
-            EVENT_LOAD_GAME = 1004,
-            EVENT_SAVE_GAME = 1005,
-            EVENT_STEP_UNDO = 1006,
-            EVENT_STEP_REDO = 1007,
-            EVENT_GAME_DISTRIBUTE_COMPUTING = 1008,
-            EVENT_VIEW_DETAIL_SYSTEM_INFO = 1009,
-            EVENT_VIEW_AI_THINKING_STEP = 1010,
-            EVENT_VIEW_GAME_TREE = 1011,
-            EVENT_HELP_TUTORIAL = 1012,
-            EVENT_HELP_ABOUT = 1013
-    ;
+    public enum Message{
+        EVENT_PIECE_SELECTED,
+        EVENT_WINDOW_CLOSING,
+        EVENT_NEW_GAME,
+        EVENT_LOAD_GAME,
+        EVENT_SAVE_GAME,
+        EVENT_STEP_UNDO,
+        EVENT_STEP_REDO,
+        EVENT_GAME_DISTRIBUTE_COMPUTING,
+        EVENT_VIEW_DETAIL_SYSTEM_INFO,
+        EVENT_VIEW_AI_THINKING_STEP,
+        EVENT_VIEW_GAME_TREE,
+        EVENT_HELP_TUTORIAL,
+        EVENT_HELP_ABOUT,
+        EVENT_REQUEST_BOARD_SIDE_INFO,
+
+    }
 
     //------------------------------const values for private usage------------------------------
     private static int
@@ -46,7 +48,7 @@ public class UIHandler {
     private eventCallBack myCallBack;
 
     //------------------------------public callback template------------------------------
-    public interface eventCallBack {public void onUICallBack(int msg);}
+    public interface eventCallBack {public void onUICallBack(Message msg);}
 
     //------------------------------function area------------------------------
     public UIHandler(eventCallBack g) {
@@ -54,7 +56,7 @@ public class UIHandler {
         main_window = new JFrame(app_name);
         status_bar = new JPanel();
         status_text = new JLabel("Ready");
-        info_panel = new InfoScrollPanelHandler();
+        info_panel = new InfoScrollPanelHandler(this);
         setupMainWindow();
     }
 
@@ -67,7 +69,7 @@ public class UIHandler {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                myCallBack.onUICallBack(EVENT_WINDOW_CLOSING);
+                myCallBack.onUICallBack(Message.EVENT_WINDOW_CLOSING);
             }
         });
         status_bar.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -82,7 +84,7 @@ public class UIHandler {
         main_window.setVisible(true);
     }
 
-    public void sendMessaageToGame(int msg){
+    public void sendMessaageToGame(Message msg){
         myCallBack.onUICallBack(msg);
     }
     public void updateStatus(String msg){
