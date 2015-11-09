@@ -1,11 +1,11 @@
-package UI_handler;
+package UIHandlerModel;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.ScrollPane;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -18,14 +18,10 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
-import javax.swing.event.ListDataListener;
 
 /**
  * Created by him on 30/10/2015.
@@ -36,6 +32,7 @@ public class InfoScrollPanelHandler {
     private JScrollPane scroll_pane;
     private UIHandler ui;
     private int numberOfComponent = 0;
+    private final int scrollSpeed = 10;
 
     public InfoScrollPanelHandler(UIHandler parent) {
         ui = parent;
@@ -44,6 +41,7 @@ public class InfoScrollPanelHandler {
         scroll_pane = new JScrollPane(base_panel,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll_pane.getVerticalScrollBar().setUnitIncrement(scrollSpeed);
 
         int border_width = scroll_pane.getVerticalScrollBar().getPreferredSize().width;
         base_panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, border_width));
@@ -63,6 +61,10 @@ public class InfoScrollPanelHandler {
         addToBasePanel(new JButton("Show AI Thinking Steps"));
         addToBasePanel(new JButton("Show Game Tree"));
         basePanelFillRemaining();
+
+        scroll_pane.setPreferredSize(new Dimension(
+                (int)(scroll_pane.getPreferredSize().getWidth()), 0
+        ));
     }
 
     private void addResourcesUsagePanel() {
@@ -182,20 +184,22 @@ public class InfoScrollPanelHandler {
     private JPanel createTableThenAddToJPanel(JPanel jp, String[][] data, String[] columnNames) {
         Color headedrColor = new Color(232, 232, 232);
         String boldColumnNames[] = new String[2];
-        for(int i=0; i<columnNames.length; i++)
-            boldColumnNames[i] = "<html><b>"+columnNames[i]+"</html>";
-        String [][] header = new String[][]{boldColumnNames};
+        for (int i = 0; i < columnNames.length; i++)
+            boldColumnNames[i] = "<html><b>" + columnNames[i] + "</html>";
+        String[][] header = new String[][]{boldColumnNames};
         JTable hd = new JTable(header, boldColumnNames);
+        hd.setEnabled(false);
         hd.setBackground(headedrColor);
         jp.add(hd);
 
         JTable dat = new JTable(data, columnNames);
+        dat.setEnabled(false);
         jp.add(dat);
 
         return jp;
     }
 
-    public JScrollPane getJPanel() {
+    public JScrollPane getJScrollPane() {
         return scroll_pane;
     }
 

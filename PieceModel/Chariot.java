@@ -1,11 +1,12 @@
-package Piece;
+package PieceModel;
 
 import java.util.ArrayList;
-import Board.Point;
+import BoardModel.Point;
 
 public class Chariot extends Piece {
-	public Chariot(int side, int PosX, int PosY){
-		this.side = side;
+
+	public Chariot(PlayerSide s, String l, double w, double h) {
+		super(s, l, w, h);
 	}
 
 	@Override
