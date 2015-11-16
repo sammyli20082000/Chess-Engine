@@ -1,20 +1,14 @@
 package UIHandlerModel;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import BoardModel.Board;
@@ -35,6 +29,8 @@ public class UIHandler {
         MENUITEM_VIEW_DETAIL_SYSTEM_INFO,
         MENUITEM_VIEW_AI_THINKING_STEP,
         MENUITEM_VIEW_GAME_TREE,
+        MENUITEM_VIEW_SHOW_DEBUG,
+        MENUITEM_VIEW_SHOW_PIECE_PLACING_POINT,
         MENUITEM_HELP_TUTORIAL,
         MENUITEM_HELP_ABOUT
     }
@@ -44,21 +40,21 @@ public class UIHandler {
 
     //------------------------------private objects------------------------------
     private JFrame main_window;
-    private JLabel status_text;
-    private JPanel status_bar;
+    private StatusBarHandler statusBarHandler;
     private InfoScrollPanelHandler infoPanelHandler;
     private GameAreaPanel gameAreaPanel;
     private eventCallBack myCallBack;
+    private MenuBarHandler menuBarHandler;
 
     //------------------------------public callback template------------------------------
     public interface eventCallBack {
         public void onMenuBarItemClicked(MenubarMessage msg);
-        public Board getBoard();
-        public void onPieceSelected(Piece piece);
+        public Board requestBoard();
+        public void onPieceOnPointSelected(Point point);
         public void onPointSelected(Point point);
-        public ArrayList<Piece> getCurrentPieces();
-        public Piece getSelectedPiece();
-        public Point getSelectedPoint();
+        public void onCancelMovement();
+        public void onConfirmMovement();
+        public void onStartGame(String playerSide);
     }
 
     //------------------------------function area------------------------------
@@ -69,10 +65,10 @@ public class UIHandler {
 
         myCallBack = g;
         main_window = new JFrame(app_name);
-        status_bar = new JPanel();
-        status_text = new JLabel("Ready");
         infoPanelHandler = new InfoScrollPanelHandler(this);
-        gameAreaPanel = new GameAreaPanel(this, myCallBack.getBoard());
+        gameAreaPanel = new GameAreaPanel(this, myCallBack.requestBoard());
+        menuBarHandler = new MenuBarHandler(this);
+        statusBarHandler = new StatusBarHandler(this);
         setupMainWindow();
     }
 
@@ -84,13 +80,9 @@ public class UIHandler {
                 myCallBack.onMenuBarItemClicked(MenubarMessage.MENUITEM_WINDOW_CLOSING);
             }
         });
-        status_bar.setLayout(new FlowLayout(FlowLayout.LEADING));
-        status_bar.setBackground(new Color(232, 232, 232));
-        status_bar.add(status_text);
-        status_bar.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, new Color(143, 143, 143)));
 
-        main_window.setJMenuBar((new MenuBarHandler(this)).getJMenuBar());
-        main_window.add(status_bar, BorderLayout.PAGE_END);
+        main_window.setJMenuBar(menuBarHandler.getJMenuBar());
+        main_window.add(statusBarHandler.getJPanel(), BorderLayout.PAGE_END);
         main_window.add(infoPanelHandler.getJScrollPane(), BorderLayout.LINE_END);
         main_window.add(gameAreaPanel, BorderLayout.CENTER);
 
@@ -112,23 +104,65 @@ public class UIHandler {
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
                 gameAreaPanel.notifyWindowResized();
+                refreshWindow();
             }
         };
+    }
+
+    public double getBoardTangent(){
+        return gameAreaPanel.getBoardTangent();
     }
 
     public Dimension getScreenResolution(){
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
 
+    public void refreshWindow(){
+        main_window.repaint();
+    }
+
     public void fitWindow(){
         main_window.pack();
     }
 
-    public eventCallBack getCalback(){
+    protected eventCallBack getCallback(){
         return myCallBack;
     }
 
-    public void updateStatus(String msg) {
-        status_text.setText(msg);
+    public void updateStatusBarStatus(String msg) {
+        statusBarHandler.updateStatusBarStatus(msg);
+    }
+
+    public void setSelectedPointOrPiece(Point p){
+        gameAreaPanel.setSelectedPointOrPiece(p);
+    }
+
+    public boolean getIsShowDebug(){
+        return menuBarHandler.getIsShowDebug();
+    }
+
+    public boolean getIsShowPiecePlacingPoint(){
+        return menuBarHandler.getIsShowPiecePlacingPoint();
+    }
+
+    public void infoPanelUpdatePlayerSideData(String rowTag, String value){
+        infoPanelHandler.updatePlayerSideTableRow(rowTag, value);
+    }
+
+    public void infoPanelUpdatePlayerRemainingTimeData(String rowTag, String value){
+        infoPanelHandler.updatePlayerRemainingTimeTableRow(rowTag, value);
+    }
+
+    /**
+     * testing 123
+     * @param rowTag
+     * @param value
+     */
+    public void infoPanelUpdateSystemInfoData(String rowTag, String value){
+        infoPanelHandler.updateSystemInfoTableRow(rowTag, value);
+    }
+
+    public void setStatusBarButtonsEnabled(boolean opt){
+        statusBarHandler.setButtonsEnabled(opt);
     }
 }

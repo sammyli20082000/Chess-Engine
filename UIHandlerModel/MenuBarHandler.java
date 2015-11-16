@@ -3,6 +3,7 @@ package UIHandlerModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -12,10 +13,11 @@ import javax.swing.JMenuItem;
  */
 public class MenuBarHandler {
     private JMenuBar myMenuBar;
-    private UIHandler handler;
+    private UIHandler ui;
+    private JCheckBoxMenuItem checkItemShowDebug, checkItemShowPiecePlacing;
 
     public MenuBarHandler(UIHandler ui){
-        handler = ui;
+        this.ui = ui;
         myMenuBar = new JMenuBar();
 
         String menuName[] = new String[]{
@@ -59,11 +61,23 @@ public class MenuBarHandler {
         for(int i=0; i<menuName.length;i++){
             JMenu menu = new JMenu(menuName[i]);
 
+            if (i == menuName.length-2){
+                checkItemShowDebug = new JCheckBoxMenuItem("Show Debug");
+                checkItemShowPiecePlacing = new JCheckBoxMenuItem("Show Piece Placing Points");
+                makeCheckedMenuItem(menu, checkItemShowDebug, UIHandler.MenubarMessage.MENUITEM_VIEW_SHOW_DEBUG);
+                makeCheckedMenuItem(menu, checkItemShowPiecePlacing, UIHandler.MenubarMessage.MENUITEM_VIEW_SHOW_PIECE_PLACING_POINT);
+            }
+
             for(int j=0; j<menuItemName[i].length; j++)
                 makeMenuItem(menu, menuItemName[i][j], menuMessage[i][j]);
 
             myMenuBar.add(menu);
         }
+    }
+
+    private void makeCheckedMenuItem(JMenu menu, JCheckBoxMenuItem menuItem, UIHandler.MenubarMessage msg){
+        menuItem.addActionListener(getMenuItemActionListener(msg));
+        menu.add(menuItem);
     }
 
     private void makeMenuItem(JMenu menu, String menuItemName, UIHandler.MenubarMessage msg){
@@ -80,8 +94,18 @@ public class MenuBarHandler {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handler.getCalback().onMenuBarItemClicked(msg);
+                ui.getCallback().onMenuBarItemClicked(msg);
+                if(msg.equals(UIHandler.MenubarMessage.MENUITEM_VIEW_SHOW_DEBUG)||
+                        msg.equals(UIHandler.MenubarMessage.MENUITEM_VIEW_SHOW_PIECE_PLACING_POINT))
+                    ui.refreshWindow();
             }
         };
+    }
+
+    public boolean getIsShowDebug(){
+        return checkItemShowDebug.getState();
+    }
+    public boolean getIsShowPiecePlacingPoint(){
+        return checkItemShowPiecePlacing.getState();
     }
 }

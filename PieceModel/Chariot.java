@@ -5,7 +5,7 @@ import BoardModel.Point;
 
 public class Chariot extends Piece {
 
-	public Chariot(PlayerSide s, String l, double w, double h) {
+	public Chariot(String s, String l, double w, double h) {
 		super(s, l, w, h);
 	}
 

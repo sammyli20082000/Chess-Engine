@@ -51,9 +51,7 @@ public class Point {
 		piece = p;
 	}
 
-	public void addEdge(Point point, Edge.Direction dir) {
-		edges.put(dir, point);
-	}
+	public void addEdge(Edge.Direction dir, Point point) { edges.put(dir, point); }
 	
 	public Point getNextPointByDirection(Edge.Direction dir){
 		return edges.get(dir);

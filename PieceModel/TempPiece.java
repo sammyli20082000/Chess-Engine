@@ -9,7 +9,7 @@ import BoardModel.Point;
  */
 public class TempPiece extends Piece {
 
-    public TempPiece(PlayerSide s, String link, double w, double h) {
+    public TempPiece(String s, String link, double w, double h) {
         super(s, link, w, h);
     }
 

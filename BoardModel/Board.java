@@ -14,10 +14,10 @@ public class Board {
 		points.add(p);
 	}
 
-	public int addPoint(double x, double y, double w, double h){
+	public Point addPoint(double x, double y, double w, double h){
 		Point p = new Point(x, y, w, h);
 		addPoint(p);
-		return p.getId();
+		return p;
 	}
 	
 	public void addPoint(ArrayList <Point> p){

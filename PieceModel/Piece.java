@@ -10,17 +10,21 @@ import javax.imageio.ImageIO;
 import BoardModel.Point;
 
 public abstract class Piece {
-    public enum PlayerSide{
-        RED,
-        BLACK
-    };
-    PlayerSide side;
+    public static class PlayerSide{
+        public static String RED="Red",
+        BLACK="Black";
+    }
+    private static int idCounter=0;
+    private int id;
+    String side;
     BufferedImage pieceImage;
     private String imageLink;
     //private Point point;
     private double height, width; // 0 to 1
 
-    public Piece(PlayerSide s, String l, double w, double h){
+    public Piece(String s, String l, double w, double h){
+        id = idCounter;
+        idCounter++;
         imageLink = l;
         side = s;
         height = h;
@@ -38,7 +42,7 @@ public abstract class Piece {
     public BufferedImage getPieceImage(){
         return pieceImage;
     }
-    public PlayerSide getSide() {
+    public String getSide() {
         return side;
     }
     public double getHeight(){
@@ -47,7 +51,12 @@ public abstract class Piece {
     public double getWidth(){
         return width;
     }
-
+    public int getId(){
+        return id;
+    }
+    public String getImageLink(){
+        return imageLink;
+    }
     /*public void setPoint(Point p){
         point = p;
     }*/

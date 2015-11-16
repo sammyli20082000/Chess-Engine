@@ -1,7 +1,7 @@
 package BoardModel;
 
 public class Edge {
-	enum Direction{
+	public enum Direction{
 		NORTH,
 		EAST,
 		SOUTH,

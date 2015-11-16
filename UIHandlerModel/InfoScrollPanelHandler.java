@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -22,14 +24,18 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Created by him on 30/10/2015.
  */
 public class InfoScrollPanelHandler {
-    private JPanel base_panel;
-    private ArrayList<JPanel> partPanels;
+    private JPanel base_panel, startSidePanel;
+    private JButton showAIButton, showGameTreeButton, undoButton, startGameButton;
+    private ButtonGroup startSideGroup;
     private JScrollPane scroll_pane;
+    private JTable playerSideTable, playerRemainingTimeTable, systemInfoTable;
+    private ArrayList<JRadioButton> startSideRadioButtonList;
     private UIHandler ui;
     private int numberOfComponent = 0;
     private final int scrollSpeed = 10;
@@ -47,23 +53,33 @@ public class InfoScrollPanelHandler {
         base_panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, border_width));
         base_panel.setBackground(Color.lightGray);
 
+        showAIButton = new JButton("Show AI Thinking Steps");
+        showAIButton.addMouseListener(getButtonOnClickListentForShowingAIOrGameTree(UIHandler.MenubarMessage.MENUITEM_VIEW_AI_THINKING_STEP));
+        showGameTreeButton = new JButton("Show Game Tree");
+        showGameTreeButton.addMouseListener(getButtonOnClickListentForShowingAIOrGameTree(UIHandler.MenubarMessage.MENUITEM_VIEW_GAME_TREE));
+        undoButton = new JButton("Undo to selected step");
+        startGameButton = new JButton("Start Game");
+        startGameButton.addMouseListener(getStartGameButtonOnClickListener());
+
         addTitleLabel("Players");
         addPlayersPanel();
         addTitleLabel("Start Side");
         addStartSideControlPanel();
+        addToBasePanel(startGameButton);
         addTitleLabel("Remaining Time");
         addRemainingTimePanel();
         addTitleLabel("Movement History");
         addMovementHistoryPanel();
+        addToBasePanel(undoButton);
         addTitleLabel("Resources Usage");
         addResourcesUsagePanel();
         addToBasePanel(new JLabel(" "));
-        addToBasePanel(new JButton("Show AI Thinking Steps"));
-        addToBasePanel(new JButton("Show Game Tree"));
+        addToBasePanel(showAIButton);
+        addToBasePanel(showGameTreeButton);
         basePanelFillRemaining();
 
         scroll_pane.setPreferredSize(new Dimension(
-                (int)(scroll_pane.getPreferredSize().getWidth()), 0
+                (int) (scroll_pane.getPreferredSize().getWidth()), 0
         ));
     }
 
@@ -73,15 +89,10 @@ public class InfoScrollPanelHandler {
         String[] columnNames = new String[]{
                 "Item", "Value"
         };
-        String[][] rowData = new String[][]{
-                {"CPU Time", "2:50\"00"},
-                {"No. Threads", "4"},
-                {"Peek RAM", "1536 MB"},
-                {"Curr. RAM", "64 MB"},
-                {"Calc. Steps", "1048576"},
-                {"1 Step Time", "0.162 ms"}
-        };
-        createTableThenAddToJPanel(jp, rowData, columnNames);
+
+        systemInfoTable = new JTable();
+
+        createTableThenAddToJPanel(jp, systemInfoTable, columnNames);
         addToBasePanel(jp);
     }
 
@@ -103,11 +114,8 @@ public class InfoScrollPanelHandler {
                 "Side",
                 "Player"
         };
-        String[][] rowData = new String[][]{
-                {"Red", "Computer"},
-                {"Black", "Player 1"}
-        };
-        createTableThenAddToJPanel(jp, rowData, columnNames);
+        playerSideTable = new JTable();
+        createTableThenAddToJPanel(jp, playerSideTable, columnNames);
         addToBasePanel(jp);
     }
 
@@ -117,33 +125,15 @@ public class InfoScrollPanelHandler {
                 "Player",
                 "Time"
         };
-        String[][] rowData = new String[][]{
-                {"Computer", "5:00\"00"},
-                {"Player", "5:00\"00"}
-        };
-        createTableThenAddToJPanel(jp, rowData, columnNames);
+        playerRemainingTimeTable = new JTable();
+        createTableThenAddToJPanel(jp, playerRemainingTimeTable, columnNames);
         addToBasePanel(jp);
     }
 
     private void addStartSideControlPanel() {
-        JPanel jp = createGroupPanel();
-
-        ButtonGroup startSideGroup = new ButtonGroup();
-        JRadioButton rb_player = new JRadioButton("Player 1"),
-                rb_computer = new JRadioButton("Computer");
-
-        startSideGroup.add(rb_player);
-        startSideGroup.add(rb_computer);
-
-        JButton startGameButton = new JButton("Start game");
-
-        jp.add(rb_player);
-        jp.add(rb_computer);
-        jp.add(startGameButton);
-
-        rb_player.setSelected(true);
-
-        addToBasePanel(jp);
+        startSidePanel = createGroupPanel();
+        startSideGroup = new ButtonGroup();
+        addToBasePanel(startSidePanel);
     }
 
     private void addTitleLabel(String title) {
@@ -181,22 +171,33 @@ public class InfoScrollPanelHandler {
         return jp;
     }
 
-    private JPanel createTableThenAddToJPanel(JPanel jp, String[][] data, String[] columnNames) {
+    private JPanel createTableThenAddToJPanel(JPanel jp, JTable contentTable, String[] columnNames) {
         Color headedrColor = new Color(232, 232, 232);
-        String boldColumnNames[] = new String[2];
+        String header[][] = new String[1][columnNames.length];
         for (int i = 0; i < columnNames.length; i++)
-            boldColumnNames[i] = "<html><b>" + columnNames[i] + "</html>";
-        String[][] header = new String[][]{boldColumnNames};
-        JTable hd = new JTable(header, boldColumnNames);
+            header[0][i] = "<html><b>" + columnNames[i] + "</html>";
+        JTable hd = new JTable(header, columnNames);
         hd.setEnabled(false);
         hd.setBackground(headedrColor);
         jp.add(hd);
 
-        JTable dat = new JTable(data, columnNames);
-        dat.setEnabled(false);
-        jp.add(dat);
+        DefaultTableModel model = new DefaultTableModel(0,0);
+        model.setColumnIdentifiers(columnNames);
+        contentTable.setModel(model);
+        contentTable.setEnabled(false);
+        jp.add(contentTable);
 
         return jp;
+    }
+
+    private MouseAdapter getButtonOnClickListentForShowingAIOrGameTree(final UIHandler.MenubarMessage msg) {
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                ui.getCallback().onMenuBarItemClicked(msg);
+            }
+        };
     }
 
     public JScrollPane getJScrollPane() {
@@ -209,5 +210,58 @@ public class InfoScrollPanelHandler {
 
     private void addToBasePanel(Component p) {
         addToBasePanel(p, 0.0);
+    }
+
+    public void updatePlayerSideTableRow(String sideColor, String sideName) {
+        updateTableRow(playerSideTable, sideColor, sideName);
+        updatePlayerRemainingTimeTableRow(sideName, "");
+        addStartSideRadioButton(sideName);
+    }
+
+    public void updatePlayerRemainingTimeTableRow(String rowTag, String value) {
+        updateTableRow(playerRemainingTimeTable, rowTag, value);
+    }
+
+    public void updateSystemInfoTableRow(String rowTag, String value) {
+        updateTableRow(systemInfoTable, rowTag, value);
+    }
+
+    private void updateTableRow(JTable myTable, String rowTag, String value) {
+        for (int i = 0; i < myTable.getRowCount(); i++) {
+            if (myTable.getValueAt(i, 0).equals(rowTag)) {
+                myTable.setValueAt(value, i, 1);
+                return;
+            }
+        }
+        ((DefaultTableModel) myTable.getModel()).addRow(new String[]{rowTag, value});
+    }
+
+    public void addStartSideRadioButton(String name){
+        if(startSideRadioButtonList == null) startSideRadioButtonList = new ArrayList<JRadioButton>();
+
+        JRadioButton rb = new JRadioButton(name);
+        startSideGroup.add(rb);
+        startSidePanel.add(rb);
+        startSideRadioButtonList.add(rb);
+        rb.setSelected(true);
+    }
+
+    private MouseAdapter getStartGameButtonOnClickListener(){
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                ui.getCallback().onStartGame(getStartGameSide());
+                startGameButton.setEnabled(false);
+            }
+        };
+    }
+
+    public String getStartGameSide(){
+        for (JRadioButton rb: startSideRadioButtonList){
+            if (rb.isSelected())
+                return rb.getText();
+        }
+        return "";
     }
 }
