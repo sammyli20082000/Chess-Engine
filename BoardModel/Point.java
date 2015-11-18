@@ -12,6 +12,8 @@ public class Point {
 			posX, posY, // 0 to 1, position on graphic, coordinate of center of image
 			width, height; // 0 to 1, position on graphic
 	
+	private ArrayList<Point> independentPieceMovable = new ArrayList<>();
+	
 	public Point(double x, double y, double w, double h){
 		id = idCounter;
 		idCounter++;
@@ -56,5 +58,4 @@ public class Point {
 	public Point getNextPointByDirection(Edge.Direction dir){
 		return edges.get(dir);
 	}
-
 }

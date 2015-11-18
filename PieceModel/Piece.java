@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import BoardModel.Board;
 import BoardModel.Point;
 
 public abstract class Piece {

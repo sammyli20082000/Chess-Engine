@@ -1,5 +1,9 @@
 package BoardModel;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import PieceModel.Piece;
 
 public class Board {
 	ArrayList <Point> points;
