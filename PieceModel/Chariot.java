@@ -8,12 +8,12 @@ import BoardModel.Point;
 
 public class Chariot extends Piece {
 
-	public Chariot(String s, String l, double w, double h) {
-		super(s, l, w, h);
+	public Chariot(String red, String l, double w, double h) {
+		super(red, l, w, h);
 	}
 
 	@Override
-	public ArrayList<Point> move() {
+	public ArrayList<Point> move(Point p) {
 		return null;
 	}
 }

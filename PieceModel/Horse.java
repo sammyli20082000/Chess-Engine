@@ -11,7 +11,7 @@ public class Horse extends Piece {
 	}
 
 	@Override
-	public ArrayList<Point> move() {
+	public ArrayList<Point> move(Point p) {
 		return null;
 	}
 

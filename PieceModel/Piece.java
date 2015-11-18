@@ -61,6 +61,6 @@ public abstract class Piece {
     /*public void setPoint(Point p){
         point = p;
     }*/
-    abstract ArrayList<Point> move();
+    public abstract ArrayList<Point> move(Point p);
 
 }
