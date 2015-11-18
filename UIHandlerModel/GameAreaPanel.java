@@ -33,22 +33,20 @@ public class GameAreaPanel extends JPanel {
     private int boardPaintWidth, boardPaintHeight, boardBaseXShift, boardBaseYShift;
     private double screenBound = 0.8;
 
-    public GameAreaPanel(UIHandler _ui, Board b) {
+    public GameAreaPanel(UIHandler _ui) {
         ui = _ui;
-        board = b;
         setupBoardImage();
         this.addMouseListener(handleMouseClick());
     }
 
     private void setupBoardImage() {
         try {
-            boardImage = ImageIO.read(new File(board.getImageLink()));
+            boardImage = ImageIO.read(new File(DataAndSetting.BoardData.imageLink));
             boardImageTangent = (double) boardImage.getHeight() / (double) boardImage.getWidth();
             calcGamePanelPreferredSize();
         } catch (Exception e) {
-            Dimension monitorResolution = ui.getScreenResolution();
-            boardPaintWidth = (int) (monitorResolution.getWidth() * screenBound);
-            boardPaintHeight = (int) (monitorResolution.getHeight() * screenBound);
+            boardPaintWidth = (int) (DataAndSetting.BoardData.preferredPixelWidth * screenBound);
+            boardPaintHeight = (int) (DataAndSetting.BoardData.preferredPixelHeight * screenBound);
             this.setPreferredSize(new Dimension(boardPaintWidth, boardPaintHeight));
             e.printStackTrace();
             boardImage = null;
@@ -101,6 +99,7 @@ public class GameAreaPanel extends JPanel {
     }
 
     int debugCounter;
+
     private void printString(Graphics g, String s) {
         debugCounter++;
         int printYShift = (int) (1.25 * g.getFont().getSize() * debugCounter);
@@ -108,7 +107,7 @@ public class GameAreaPanel extends JPanel {
         Rectangle2D rect = fm.getStringBounds(s, g);
 
         g.setColor(new Color(0f, 0f, 0f, 0.3f));
-        g.fillRect(0, printYShift - fm.getAscent(), (int)rect.getWidth(), (int)rect.getHeight());
+        g.fillRect(0, printYShift - fm.getAscent(), (int) rect.getWidth(), (int) rect.getHeight());
 
         g.setColor(Color.white);
         g.drawString(s, 0, printYShift);
@@ -116,8 +115,8 @@ public class GameAreaPanel extends JPanel {
 
     private void printString(Graphics g, String tag, double[] dSet) {
         String s = tag + ": ";
-        for (int i=0; i< dSet.length; i++){
-            if(i==dSet.length-1)
+        for (int i = 0; i < dSet.length; i++) {
+            if (i == dSet.length - 1)
                 s = s + dSet[i];
             else
                 s = s + dSet[i] + ", ";
@@ -131,11 +130,13 @@ public class GameAreaPanel extends JPanel {
         if (boardImage != null)
             g.drawImage(boardImage, boardBaseXShift, boardBaseYShift, boardPaintWidth, boardPaintHeight, null);
 
-        if(ui.getIsShowPiecePlacingPoint())drawPiecePlacingPoints(g);
-        drawCurrentPieces(g);
-        drawFrameForSelectedObject(g);
+        if (board != null) {
+            if (ui.getIsShowPiecePlacingPoint()) drawPiecePlacingPoints(g);
+            drawCurrentPieces(g);
+            drawFrameForSelectedObject(g);
+        }
 
-        if (ui.getIsShowDebug())printDebugLog(g);
+        if (ui.getIsShowDebug()) printDebugLog(g);
     }
 
     private void drawFrameForSelectedObject(Graphics g) {
@@ -182,7 +183,7 @@ public class GameAreaPanel extends JPanel {
     private void printDebugLog(Graphics g) {
         debugCounter = 0;
         Font f = g.getFont();
-        g.setFont(new Font(f.getName(), Font.PLAIN, f.getSize()*3/2));
+        g.setFont(new Font(f.getName(), Font.PLAIN, f.getSize() * 3 / 2));
 
         printString(g, "mouse", new double[]{mouseXTang, mouseYTang});
         printString(g, "board image tanget", new double[]{boardImageTangent});
@@ -269,6 +270,7 @@ public class GameAreaPanel extends JPanel {
     }
 
     private Point checkThatPointOrPieceClicked() {
+        if (board == null ) return null;
         for (Point p : board.getPoints()) {
             Piece pieceOnPoint = p.getPiece();
 
@@ -297,6 +299,11 @@ public class GameAreaPanel extends JPanel {
 
     public void setSelectedPointOrPiece(Point p) {
         selectedPoint = p;
+        repaint();
+    }
+
+    public void setBoard(Board b) {
+        board = b;
         repaint();
     }
 }

@@ -17,6 +17,8 @@ public class Point {
 		id = idCounter;
 		idCounter++;
 
+		for(Edge.Direction n : Edge.Direction.values())
+
 		posX = x;
 		posY = y;
 		width = w;

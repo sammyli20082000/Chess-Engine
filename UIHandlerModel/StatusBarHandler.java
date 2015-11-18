@@ -43,8 +43,8 @@ public class StatusBarHandler {
         confirmMoveGBC.gridx=2;
         confirmMoveGBC.gridy=0;
 
-        cancelMove.addMouseListener(getOnClickListener(false));
-        confirmMove.addMouseListener(getOnClickListener(true));
+        cancelMove.addMouseListener(getOnClickListener(false, cancelMove));
+        confirmMove.addMouseListener(getOnClickListener(true, confirmMove));
 
         basePanel.setLayout(new GridBagLayout());
         basePanel.setBackground(new Color(232, 232, 232));
@@ -69,12 +69,13 @@ public class StatusBarHandler {
         statusText.setText(msg);
     }
 
-    private MouseAdapter getOnClickListener(boolean isConfirm){
+    private MouseAdapter getOnClickListener(boolean isConfirm, final JButton thisButton){
         if(isConfirm)
             return new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
+                    if (!thisButton.isEnabled()) return;
                     ui.getCallback().onConfirmMovement();
                 }
             };
@@ -83,6 +84,7 @@ public class StatusBarHandler {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     super.mouseClicked(e);
+                    if (!thisButton.isEnabled()) return;
                     ui.getCallback().onCancelMovement();
                 }
             };

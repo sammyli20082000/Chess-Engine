@@ -49,7 +49,6 @@ public class UIHandler {
     //------------------------------public callback template------------------------------
     public interface eventCallBack {
         public void onMenuBarItemClicked(MenubarMessage msg);
-        public Board requestBoard();
         public void onPieceOnPointSelected(Point point);
         public void onPointSelected(Point point);
         public void onCancelMovement();
@@ -66,7 +65,7 @@ public class UIHandler {
         myCallBack = g;
         main_window = new JFrame(app_name);
         infoPanelHandler = new InfoScrollPanelHandler(this);
-        gameAreaPanel = new GameAreaPanel(this, myCallBack.requestBoard());
+        gameAreaPanel = new GameAreaPanel(this);
         menuBarHandler = new MenuBarHandler(this);
         statusBarHandler = new StatusBarHandler(this);
         setupMainWindow();
@@ -158,11 +157,19 @@ public class UIHandler {
      * @param rowTag
      * @param value
      */
-    public void infoPanelUpdateSystemInfoData(String rowTag, String value){
+    public void infoPanelUpdateSystemInfoData(String rowTag, String value) {
         infoPanelHandler.updateSystemInfoTableRow(rowTag, value);
     }
 
     public void setStatusBarButtonsEnabled(boolean opt){
         statusBarHandler.setButtonsEnabled(opt);
+    }
+
+    public void addMovementHistoryRecord(String record){
+        infoPanelHandler.addMovementHistoryRecord(record);
+    }
+
+    public void setBoard(Board b){
+        gameAreaPanel.setBoard(b);
     }
 }

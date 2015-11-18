@@ -35,6 +35,7 @@ public class InfoScrollPanelHandler {
     private ButtonGroup startSideGroup;
     private JScrollPane scroll_pane;
     private JTable playerSideTable, playerRemainingTimeTable, systemInfoTable;
+    private JList movementHistoryList;
     private ArrayList<JRadioButton> startSideRadioButtonList;
     private UIHandler ui;
     private int numberOfComponent = 0;
@@ -54,12 +55,13 @@ public class InfoScrollPanelHandler {
         base_panel.setBackground(Color.lightGray);
 
         showAIButton = new JButton("Show AI Thinking Steps");
-        showAIButton.addMouseListener(getButtonOnClickListentForShowingAIOrGameTree(UIHandler.MenubarMessage.MENUITEM_VIEW_AI_THINKING_STEP));
+        showAIButton.addMouseListener(getButtonOnClickListentForShowingAIOrGameTree(UIHandler.MenubarMessage.MENUITEM_VIEW_AI_THINKING_STEP, showAIButton));
         showGameTreeButton = new JButton("Show Game Tree");
-        showGameTreeButton.addMouseListener(getButtonOnClickListentForShowingAIOrGameTree(UIHandler.MenubarMessage.MENUITEM_VIEW_GAME_TREE));
+        showGameTreeButton.addMouseListener(getButtonOnClickListentForShowingAIOrGameTree(UIHandler.MenubarMessage.MENUITEM_VIEW_GAME_TREE,showGameTreeButton));
         undoButton = new JButton("Undo to selected step");
+        undoButton.addMouseListener(getUndoButtonOnClickListener(undoButton));
         startGameButton = new JButton("Start Game");
-        startGameButton.addMouseListener(getStartGameButtonOnClickListener());
+        startGameButton.addMouseListener(getStartGameButtonOnClickListener(startGameButton));
 
         addTitleLabel("Players");
         addPlayersPanel();
@@ -99,12 +101,13 @@ public class InfoScrollPanelHandler {
     private void addMovementHistoryPanel() {
         JPanel jp = createGroupPanel();
 
-        JList movementHistory = new JList(new DefaultListModel<String>());
-        DefaultListModel data = (DefaultListModel) movementHistory.getModel();
-        for (int i = 0; i < 100; i++)
+        movementHistoryList = new JList();
+        DefaultListModel<String> data = new DefaultListModel<String>();
+        movementHistoryList.setModel(data);
+        for (int i = 0; i < 0; i++)
             data.addElement("Step " + (i + 1));
 
-        jp.add(new JScrollPane(movementHistory));
+        jp.add(new JScrollPane(movementHistoryList));
         addToBasePanel(jp);
     }
 
@@ -181,7 +184,7 @@ public class InfoScrollPanelHandler {
         hd.setBackground(headedrColor);
         jp.add(hd);
 
-        DefaultTableModel model = new DefaultTableModel(0,0);
+        DefaultTableModel model = new DefaultTableModel(0, 0);
         model.setColumnIdentifiers(columnNames);
         contentTable.setModel(model);
         contentTable.setEnabled(false);
@@ -190,11 +193,12 @@ public class InfoScrollPanelHandler {
         return jp;
     }
 
-    private MouseAdapter getButtonOnClickListentForShowingAIOrGameTree(final UIHandler.MenubarMessage msg) {
+    private MouseAdapter getButtonOnClickListentForShowingAIOrGameTree(final UIHandler.MenubarMessage msg, final JButton thisButton) {
         return new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                if (!thisButton.isEnabled()) return;
                 ui.getCallback().onMenuBarItemClicked(msg);
             }
         };
@@ -226,6 +230,26 @@ public class InfoScrollPanelHandler {
         updateTableRow(systemInfoTable, rowTag, value);
     }
 
+    private MouseAdapter getUndoButtonOnClickListener(final JButton thisButton){
+        return new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if(!thisButton.isEnabled()) return;
+                int listSize = ((DefaultListModel)movementHistoryList.getModel()).getSize(), selectedIndex= movementHistoryList.getSelectedIndex();
+                if (listSize ==0) return;
+                for(int i=0; i<listSize - selectedIndex; i++){
+                    ui.getCallback().onMenuBarItemClicked(UIHandler.MenubarMessage.MENUITEM_STEP_UNDO);
+                    ((DefaultListModel)movementHistoryList.getModel()).remove(
+                            ((DefaultListModel) movementHistoryList.getModel()).getSize() - 1
+                    );
+                    historyListSelectLastItem();
+                }
+
+            }
+        };
+    }
+
     private void updateTableRow(JTable myTable, String rowTag, String value) {
         for (int i = 0; i < myTable.getRowCount(); i++) {
             if (myTable.getValueAt(i, 0).equals(rowTag)) {
@@ -236,8 +260,9 @@ public class InfoScrollPanelHandler {
         ((DefaultTableModel) myTable.getModel()).addRow(new String[]{rowTag, value});
     }
 
-    public void addStartSideRadioButton(String name){
-        if(startSideRadioButtonList == null) startSideRadioButtonList = new ArrayList<JRadioButton>();
+    public void addStartSideRadioButton(String name) {
+        if (startSideRadioButtonList == null)
+            startSideRadioButtonList = new ArrayList<JRadioButton>();
 
         JRadioButton rb = new JRadioButton(name);
         startSideGroup.add(rb);
@@ -246,22 +271,34 @@ public class InfoScrollPanelHandler {
         rb.setSelected(true);
     }
 
-    private MouseAdapter getStartGameButtonOnClickListener(){
+    private MouseAdapter getStartGameButtonOnClickListener(final JButton thisButton) {
         return new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                if (!thisButton.isEnabled()) return;
                 ui.getCallback().onStartGame(getStartGameSide());
                 startGameButton.setEnabled(false);
             }
         };
     }
 
-    public String getStartGameSide(){
-        for (JRadioButton rb: startSideRadioButtonList){
+    public String getStartGameSide() {
+        for (JRadioButton rb : startSideRadioButtonList) {
             if (rb.isSelected())
                 return rb.getText();
         }
         return "";
+    }
+
+    public void addMovementHistoryRecord(String msg) {
+        ((DefaultListModel<String>) movementHistoryList.getModel()).addElement(msg);
+        historyListSelectLastItem();
+    }
+
+    private void historyListSelectLastItem(){
+        if (movementHistoryList.getModel().getSize() ==0) return;
+        movementHistoryList.setSelectedIndex(movementHistoryList.getModel().getSize() - 1);
+        movementHistoryList.ensureIndexIsVisible(movementHistoryList.getModel().getSize() - 1);
     }
 }

@@ -37,6 +37,7 @@ public class Game {
 		ai = new AI(this);
 		ui = new UIHandler(handleUIEventCallBack());
 		addDataToInfoPanel();
+		ui.setBoard(board);
 		ui.updateStatusBarStatus("Select start side and start game");
 	}
 
@@ -318,11 +319,6 @@ public class Game {
 		return new UIHandler.eventCallBack() {
 			public void onMenuBarItemClicked(UIHandler.MenubarMessage msg) {
 				handleMenuBarMessage(msg);
-			}
-
-			@Override
-			public Board requestBoard() {
-				return board;
 			}
 
 			@Override
