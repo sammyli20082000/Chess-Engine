@@ -19,6 +19,7 @@ import UIHandlerModel.UIHandler;
 public class Game {
 	Board board;
 	AI ai;
+	static boolean canCapture;
 	ArrayList<Piece> currPieces;
 	Piece selectedPiece;
 	Point selectedPoint;
@@ -34,6 +35,7 @@ public class Game {
 		myLocation = (new File(Game.class.getClassLoader().getResource("").getPath())).getAbsolutePath();
 		board = new Board();
 		board.setImageLink("pic/board.png");
+		canCapture = true;
 		ai = new AI(this);
 		ui = new UIHandler(handleUIEventCallBack());
 		addDataToInfoPanel();
@@ -68,6 +70,24 @@ public class Game {
 			}
 			if (i % 10 > 0) {
 				board.getPointByID(i).addEdge(Direction.NORTH, board.getPointByID(i - 1));
+			}
+			if (i == 41 || i == 48) {
+				board.getPointByID(i).addEdge(Direction.NORTH_EAST, board.getPointByID(i + 9));
+				board.getPointByID(i).addEdge(Direction.NORTH_WEST, board.getPointByID(i - 11));
+				board.getPointByID(i).addEdge(Direction.SOUTH_EAST, board.getPointByID(i + 11));
+				board.getPointByID(i).addEdge(Direction.SOUTH_WEST, board.getPointByID(i - 9));
+			}
+			if (i == 30 || i == 37) {
+				board.getPointByID(i).addEdge(Direction.SOUTH_EAST, board.getPointByID(i + 11));
+			}
+			if (i == 32 || i == 39) {
+				board.getPointByID(i).addEdge(Direction.NORTH_EAST, board.getPointByID(i + 9));
+			}
+			if (i == 50 || i == 57) {
+				board.getPointByID(i).addEdge(Direction.SOUTH_WEST, board.getPointByID(i - 9));
+			}
+			if (i == 52 || i == 59) {
+				board.getPointByID(i).addEdge(Direction.NORTH_WEST, board.getPointByID(i - 11));
 			}
 		}
 
@@ -353,9 +373,14 @@ public class Game {
 
 			@Override
 			public void onPieceOnPointSelected(Point point) {
+				if (selectedPiece != null && canCapture
+						&& !point.getPiece().getSide().equals(selectedPiece.getSide())) {
+					board.capture(selectedPoint, point, selectedPiece);
+				} else {
+					selectedPiece = point.getPiece();
+					board.updateSelectedPieceMovable(point);
+				}
 				selectedPoint = point;
-				selectedPiece = point.getPiece();
-				board.updateSelectedPieceMovable(point);
 			}
 		};
 	}

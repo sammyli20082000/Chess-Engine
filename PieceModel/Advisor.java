@@ -3,6 +3,7 @@ package PieceModel;
 import java.util.ArrayList;
 
 import BoardModel.Point;
+import BoardModel.Edge.Direction;
 
 public class Advisor extends Piece {
 	
@@ -12,7 +13,14 @@ public class Advisor extends Piece {
 
 	@Override
 	public ArrayList<Point> move(Point p) {
-		return null;
+		ArrayList<Point> moves = new ArrayList<>();
+		
+		moves.add(p.getNextPointByDirection(Direction.NORTH_EAST));
+		moves.add(p.getNextPointByDirection(Direction.NORTH_WEST));
+		moves.add(p.getNextPointByDirection(Direction.SOUTH_EAST));
+		moves.add(p.getNextPointByDirection(Direction.SOUTH_WEST));
+		
+		return moves;
 	}
 
 }

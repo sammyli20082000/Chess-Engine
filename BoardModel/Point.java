@@ -64,4 +64,5 @@ public class Point {
 		pieceInsideMovable = getPiece().move(this);
 		return pieceInsideMovable;
 	}
+	
 }

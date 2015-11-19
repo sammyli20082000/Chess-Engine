@@ -58,4 +58,10 @@ public class Board {
 	public ArrayList<Point> getSelectedPieceMovable(){
 		return selectedPieceMovable;
 	}
+	
+	public void capture(Point fromPoint, Point toPoint, Piece piece){
+		toPoint.setPiece(null);
+		toPoint.setPiece(piece);
+		fromPoint.setPiece(null);
+	}
 }
