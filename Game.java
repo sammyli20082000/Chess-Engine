@@ -372,6 +372,11 @@ public class Game {
 			}
 
 			@Override
+			public Point getSelectedPointOrPiece() {
+				return selectedPoint;
+			}
+
+			@Override
 			public void onPieceOnPointSelected(Point point) {
 				if (selectedPiece != null && canCapture
 						&& !point.getPiece().getSide().equals(selectedPiece.getSide())) {

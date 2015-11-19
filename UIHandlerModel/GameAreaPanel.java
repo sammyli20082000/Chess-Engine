@@ -27,7 +27,6 @@ public class GameAreaPanel extends JPanel {
     private UIHandler ui;
     private ArrayList<Piece> pieces;
     private BufferedImage boardImage;
-    private Point selectedPoint;
     private double boardImageTangent = 1.0, gamePanelTangent = 1.0;  // height / width, that is (y/x)
     private double mouseXTang, mouseYTang; //relative coordinate not pixel; range from 0 to 1
     private int boardPaintWidth, boardPaintHeight, boardBaseXShift, boardBaseYShift;
@@ -140,6 +139,7 @@ public class GameAreaPanel extends JPanel {
     }
 
     private void drawFrameForSelectedObject(Graphics g) {
+        Point selectedPoint = ui.getCallback().getSelectedPointOrPiece();
         Piece selectedPiece = (selectedPoint != null) ? selectedPoint.getPiece() : null;
 
         if (selectedPoint == null) return;
@@ -255,7 +255,7 @@ public class GameAreaPanel extends JPanel {
                 mouseXTang = ((double) e.getX() - boardBaseXShift) / boardPaintWidth;
                 mouseYTang = ((double) e.getY() - boardBaseYShift) / boardPaintHeight;
 
-                selectedPoint = checkThatPointOrPieceClicked();
+                Point selectedPoint = checkThatPointOrPieceClicked();
 
                 if (selectedPoint != null && selectedPoint.getPiece() != null)
                     ui.getCallback().onPieceOnPointSelected(selectedPoint);
@@ -295,11 +295,6 @@ public class GameAreaPanel extends JPanel {
             return 1.0 * this.getHeight() / this.getWidth();
         else
             return boardImageTangent;
-    }
-
-    public void setSelectedPointOrPiece(Point p) {
-        selectedPoint = p;
-        repaint();
     }
 
     public void setBoard(Board b) {

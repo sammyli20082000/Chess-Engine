@@ -54,6 +54,7 @@ public class UIHandler {
         public void onCancelMovement();
         public void onConfirmMovement();
         public void onStartGame(String playerSide);
+        public Point getSelectedPointOrPiece();
     }
 
     //------------------------------function area------------------------------
@@ -132,10 +133,6 @@ public class UIHandler {
         statusBarHandler.updateStatusBarStatus(msg);
     }
 
-    public void setSelectedPointOrPiece(Point p){
-        gameAreaPanel.setSelectedPointOrPiece(p);
-    }
-
     public boolean getIsShowDebug(){
         return menuBarHandler.getIsShowDebug();
     }
@@ -151,12 +148,6 @@ public class UIHandler {
     public void infoPanelUpdatePlayerRemainingTimeData(String rowTag, String value){
         infoPanelHandler.updatePlayerRemainingTimeTableRow(rowTag, value);
     }
-
-    /**
-     * testing 123
-     * @param rowTag
-     * @param value
-     */
     public void infoPanelUpdateSystemInfoData(String rowTag, String value) {
         infoPanelHandler.updateSystemInfoTableRow(rowTag, value);
     }
