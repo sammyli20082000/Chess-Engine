@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * Created by root on 11/16/15.
  */
 public class StatusBarHandler {
-    private JPanel basePanel, buttonPanel;
+    private JPanel basePanel;
     private UIHandler ui;
     private JLabel statusText;
     private JButton cancelMove, confirmMove;
@@ -24,7 +24,6 @@ public class StatusBarHandler {
     public StatusBarHandler(UIHandler uiHandler){
         ui = uiHandler;
         basePanel = new JPanel();
-        buttonPanel = new JPanel();
         statusText = new JLabel("");
         cancelMove = new JButton("Cancel Move");
         confirmMove = new JButton("Confirm Move");

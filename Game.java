@@ -2,7 +2,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import BoardModel.Board;
-import BoardModel.Edge;
 import BoardModel.Edge.Direction;
 import BoardModel.Point;
 import PieceModel.Advisor;
@@ -13,7 +12,6 @@ import PieceModel.General;
 import PieceModel.Horse;
 import PieceModel.Piece;
 import PieceModel.Soldier;
-import PieceModel.TempPiece;
 import UIHandlerModel.UIHandler;
 
 public class Game {
@@ -218,7 +216,7 @@ public class Game {
 				currPieces.add(ba);
 				break;
 			case 49:
-				Piece bg = new General(Piece.PlayerSide.RED, "pic/red_General.png", diffX * squareConst,
+				Piece bg = new General(Piece.PlayerSide.RED, "pic/red_general.png", diffX * squareConst,
 						diffX * squareConst / boardTangent);
 				board.getPointByID(i).setPiece(bg);
 				currPieces.add(bg);
@@ -335,8 +333,8 @@ public class Game {
 	// ui.refreshWindow();
 	// }
 
-	private UIHandler.eventCallBack handleUIEventCallBack() {
-		return new UIHandler.eventCallBack() {
+	private UIHandler.EventCallBackHandler handleUIEventCallBack() {
+		return new UIHandler.EventCallBackHandler() {
 			public void onMenuBarItemClicked(UIHandler.MenubarMessage msg) {
 				handleMenuBarMessage(msg);
 			}
@@ -347,11 +345,15 @@ public class Game {
 					if (board.getSelectedPieceMovable().contains(point)) {
 						point.setPiece(selectedPiece);
 						selectedPoint.setPiece(null);
+						selectedPoint = null;
+						selectedPiece = null;
+					}else{
+						selectedPoint = point;
 					}
 				} else {
 					selectedPiece = null;
+					selectedPoint = point;
 				}
-				selectedPoint = point;
 			}
 
 			@Override
@@ -362,6 +364,7 @@ public class Game {
 			@Override
 			public void onConfirmMovement() {
 				ui.updateStatusBarStatus("confirm movement");
+				ui.addMovementHistoryRecord("confirmed move");
 			}
 
 			@Override
@@ -377,9 +380,19 @@ public class Game {
 			}
 
 			@Override
+			public ArrayList<Point> getPieceNextMovePointCandidateList() {
+				if (selectedPoint != null && selectedPiece != null)
+					return board.getSelectedPieceMovable();
+				else
+					return null;
+			}
+
+			@Override
 			public void onPieceOnPointSelected(Point point) {
 				if (selectedPiece != null && canCapture
-						&& !point.getPiece().getSide().equals(selectedPiece.getSide())) {
+						&& !point.getPiece().getSide().equals(selectedPiece.getSide()) &&
+						board.getSelectedPieceMovable().contains(point)
+						) {
 					board.capture(selectedPoint, point, selectedPiece);
 				} else {
 					selectedPiece = point.getPiece();

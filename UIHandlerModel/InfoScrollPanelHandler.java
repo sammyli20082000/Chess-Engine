@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -25,6 +26,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
+
+import javafx.scene.control.RadioButton;
 
 /**
  * Created by him on 30/10/2015.
@@ -102,6 +105,7 @@ public class InfoScrollPanelHandler {
         JPanel jp = createGroupPanel();
 
         movementHistoryList = new JList();
+        movementHistoryList.setFixedCellWidth(1);
         DefaultListModel<String> data = new DefaultListModel<String>();
         movementHistoryList.setModel(data);
         for (int i = 0; i < 0; i++)
@@ -278,7 +282,10 @@ public class InfoScrollPanelHandler {
                 super.mouseClicked(e);
                 if (!thisButton.isEnabled()) return;
                 ui.getCallback().onStartGame(getStartGameSide());
+                if (ui.isBoardImageNotSet()) ui.setIsShowPiecePlacingPoint(true);
                 startGameButton.setEnabled(false);
+                for (JRadioButton jrb : startSideRadioButtonList)
+                    jrb.setEnabled(false);
             }
         };
     }

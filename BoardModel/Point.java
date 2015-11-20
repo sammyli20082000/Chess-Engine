@@ -11,7 +11,7 @@ public class Point {
 	private double
 			posX, posY, // 0 to 1, position on graphic, coordinate of center of image
 			width, height; // 0 to 1, position on graphic
-	private ArrayList<Point> pieceInsideMovable = new ArrayList<>();
+	private ArrayList<Point> pieceInsideMovable = new ArrayList<Point>();
 	
 	public Point(double x, double y, double w, double h){
 		id = idCounter;
