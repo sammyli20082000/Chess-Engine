@@ -393,11 +393,13 @@ public class Game {
 				if (selectedPiece != null && canCapture && !point.getPiece().getSide().equals(selectedPiece.getSide())
 						&& board.getSelectedPieceMovable().contains(point)) {
 					board.capture(selectedPoint, point, selectedPiece);
+					selectedPiece = null;
+					selectedPoint = null;
 				} else {
 					board.updateSelectedPieceMovable(point);
+					selectedPiece = point.getPiece();
+					selectedPoint = point;
 				}
-				selectedPiece = point.getPiece();
-				selectedPoint = point;
 			}
 		};
 	}
