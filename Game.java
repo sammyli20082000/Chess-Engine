@@ -378,13 +378,13 @@ public class Game {
 
 			@Override
 			public void onPieceOnPointSelected(Point point) {
-				if (selectedPiece != null && canCapture
-						&& !point.getPiece().getSide().equals(selectedPiece.getSide())) {
+				if (selectedPiece != null && canCapture && !point.getPiece().getSide().equals(selectedPiece.getSide())
+						&& board.getSelectedPieceMovable().contains(point)) {
 					board.capture(selectedPoint, point, selectedPiece);
 				} else {
-					selectedPiece = point.getPiece();
 					board.updateSelectedPieceMovable(point);
 				}
+				selectedPiece = point.getPiece();
 				selectedPoint = point;
 			}
 		};
