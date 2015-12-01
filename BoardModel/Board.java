@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import PieceModel.Elephant;
 import PieceModel.Piece;
 
 public class Board {
@@ -61,6 +62,11 @@ public class Board {
 	
 	public void capture(Point fromPoint, Point toPoint, Piece piece){
 		toPoint.setPiece(null);
+		toPoint.setPiece(piece);
+		fromPoint.setPiece(null);
+	}
+
+	public void movePiece(Piece piece, Point fromPoint, Point toPoint) {
 		toPoint.setPiece(piece);
 		fromPoint.setPiece(null);
 	}

@@ -32,6 +32,14 @@ public class Soldier extends Piece {
 				moves.add(p.getNextPointByDirection(Direction.SOUTH));
 			}
 		}
+		
+		for(int i = 0; i < moves.size(); i++){
+			if(moves.get(i) == null){
+				moves.remove(i);
+				i--;
+			}
+		}
+		
 		return moves;
 	}
 }
