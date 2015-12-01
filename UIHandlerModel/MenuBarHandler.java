@@ -108,4 +108,7 @@ public class MenuBarHandler {
     public boolean getIsShowPiecePlacingPoint(){
         return checkItemShowPiecePlacing.getState();
     }
+    public void setIsShowPiecePlacingPoint(boolean opt) {
+        checkItemShowPiecePlacing.setState(opt);
+    }
 }

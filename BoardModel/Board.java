@@ -53,15 +53,23 @@ public class Board {
 	}
 
 	public void updateSelectedPieceMovable(Point p) {
-		selectedPieceMovable = p.getPieceInsideMovable();
+		selectedPieceMovable.clear();
+		for (int i = 0; i < p.getPieceInsideMovable().size(); i++) {
+			try {
+				if (!p.getPieceInsideMovable().get(i).getPiece().getSide().equals(p.getPiece().getSide())) {
+					selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
+				}
+			} catch (Exception e) {
+				selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
+			}
+		}
 	}
-	
-	public ArrayList<Point> getSelectedPieceMovable(){
+
+	public ArrayList<Point> getSelectedPieceMovable() {
 		return selectedPieceMovable;
 	}
-	
-	public void capture(Point fromPoint, Point toPoint, Piece piece){
-		toPoint.setPiece(null);
+
+	public void capture(Piece piece, Point fromPoint, Point toPoint) {
 		toPoint.setPiece(piece);
 		fromPoint.setPiece(null);
 	}

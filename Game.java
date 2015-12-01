@@ -2,7 +2,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import BoardModel.Board;
-import BoardModel.Edge;
 import BoardModel.Edge.Direction;
 import BoardModel.Point;
 import PieceModel.Advisor;
@@ -13,13 +12,14 @@ import PieceModel.General;
 import PieceModel.Horse;
 import PieceModel.Piece;
 import PieceModel.Soldier;
-import PieceModel.TempPiece;
 import UIHandlerModel.UIHandler;
 
 public class Game {
 	Board board;
 	AI ai;
-	static boolean canCapture;
+	boolean canCapture;
+	ArrayList<String> sides = new ArrayList<>();
+	String currentSide;
 	ArrayList<Piece> currPieces;
 	Piece selectedPiece;
 	Point selectedPoint;
@@ -32,11 +32,21 @@ public class Game {
 	}
 
 	public Game() {
+		//set location
 		myLocation = (new File(Game.class.getClassLoader().getResource("").getPath())).getAbsolutePath();
+		
+		//set board
 		board = new Board();
 		board.setImageLink("pic/board.png");
+		
+		//set chess type
 		canCapture = true;
+		
+		sides.add(Piece.PlayerSide.RED);
+		sides.add(Piece.PlayerSide.BLACK);
+		
 		ai = new AI(this);
+		
 		ui = new UIHandler(handleUIEventCallBack());
 		addDataToInfoPanel();
 		ui.setBoard(board);
@@ -91,47 +101,6 @@ public class Game {
 			}
 		}
 
-		// for (int i = 0; i < points.size(); i++) {
-		// Point p = points.get(i);
-		// if (i / 10 == 0) {
-		// if (i % 10 == 0) {
-		// p.addEdge(Direction.SOUTH, points.get(i + 1));
-		// } else if (i % 10 == 9) {
-		// p.addEdge(Direction.NORTH, points.get(i - 1));
-		// } else {
-		// p.addEdge(Direction.SOUTH, points.get(i + 1));
-		// p.addEdge(Direction.NORTH, points.get(i - 1));
-		// }
-		// p.addEdge(Direction.EAST, points.get(i + 10));
-		// } else if (i / 10 == 8) {
-		// if (i % 10 == 0) {
-		// p.addEdge(Direction.SOUTH, points.get(i + 1));
-		// } else if (i % 10 == 9) {
-		// p.addEdge(Direction.NORTH, points.get(i - 1));
-		// } else {
-		// p.addEdge(Direction.SOUTH, points.get(i + 1));
-		// p.addEdge(Direction.NORTH, points.get(i - 1));
-		// }
-		// p.addEdge(Direction.WEST, points.get(i - 10));
-		// } else if (i % 10 == 0) {
-		// if (!(i / 10 == 0) && !(i / 10 == 8)) {
-		// p.addEdge(Direction.SOUTH, points.get(i + 1));
-		// p.addEdge(Direction.EAST, points.get(i + 10));
-		// p.addEdge(Direction.WEST, points.get(i - 10));
-		// }
-		// } else if (i % 10 == 9) {
-		// if (!(i / 10 == 0) && !(i / 10 == 8)) {
-		// continue;
-		// } else {
-		// p.addEdge(Direction.NORTH, points.get(i - 1));
-		// p.addEdge(Direction.EAST, points.get(i + 10));
-		// p.addEdge(Direction.WEST, points.get(i - 10));
-		// }
-		// }
-		// }
-
-		// String chessName[] = new String[] { "general", "chariot", "horse",
-		// "elephant", "advisor", "cannon", "soldier" };
 		currPieces = new ArrayList<Piece>();
 
 		for (int i = 0; i < 90; i++) {
@@ -218,7 +187,7 @@ public class Game {
 				currPieces.add(ba);
 				break;
 			case 49:
-				Piece bg = new General(Piece.PlayerSide.RED, "pic/red_General.png", diffX * squareConst,
+				Piece bg = new General(Piece.PlayerSide.RED, "pic/red_general.png", diffX * squareConst,
 						diffX * squareConst / boardTangent);
 				board.getPointByID(i).setPiece(bg);
 				currPieces.add(bg);
@@ -246,97 +215,8 @@ public class Game {
 		ui.refreshWindow();
 	}
 
-	// for (int i = 0; i < chessName.length; i++) {
-	// Piece rP = null, bP = null;
-	// double squareConst = 0.8;
-	//
-	// switch (i) {
-	// case 0:
-	// rP = new General(Piece.PlayerSide.RED, "pic/red_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// bP = new General(Piece.PlayerSide.BLACK, "pic/black_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// break;
-	// case 1:
-	// rP = new Chariot(Piece.PlayerSide.RED, "pic/red_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// bP = new Chariot(Piece.PlayerSide.BLACK, "pic/black_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// break;
-	// case 2:
-	// rP = new Horse(Piece.PlayerSide.RED, "pic/red_" + chessName[i] + ".png",
-	// diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// bP = new Horse(Piece.PlayerSide.BLACK, "pic/black_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// break;
-	// case 3:
-	// rP = new Elephant(Piece.PlayerSide.RED, "pic/red_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// bP = new Elephant(Piece.PlayerSide.BLACK, "pic/black_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// break;
-	// case 4:
-	// rP = new Advisor(Piece.PlayerSide.RED, "pic/red_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// bP = new Advisor(Piece.PlayerSide.BLACK, "pic/black_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// break;
-	// case 5:
-	// rP = new Cannon(Piece.PlayerSide.RED, "pic/red_" + chessName[i] + ".png",
-	// diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// bP = new Cannon(Piece.PlayerSide.BLACK, "pic/black_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// break;
-	// case 6:
-	// rP = new Soldier(Piece.PlayerSide.RED, "pic/red_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// bP = new Soldier(Piece.PlayerSide.BLACK, "pic/black_" + chessName[i] +
-	// ".png", diffX * squareConst,
-	// diffX * squareConst / boardTangent);
-	// break;
-	// }
-	//
-	// currPieces.add(rP);
-	// currPieces.add(bP);
-	//
-	// if (i == 0) {
-	// board.getPointByID(40).setPiece(rP);
-	// board.getPointByID(49).setPiece(bP);
-	// } else if (i == chessName.length - 1) {
-	// for (int j = 0; j < 5; j++) {
-	// board.getPointByID(3 + 20 * j).setPiece(rP);
-	// board.getPointByID(6 + 20 * j).setPiece(bP);
-	// }
-	// } else if (i == chessName.length - 2) {
-	// for (int j = 0; j < 2; j++) {
-	// board.getPointByID(12 + 60 * j).setPiece(rP);
-	// board.getPointByID(17 + 60 * j).setPiece(bP);
-	// }
-	// } else {
-	// for (int j = 0; j < 2; j++) {
-	// board.getPointByID(0 + 10 * (i - 1) + (100 - 20 * i) * j).setPiece(rP);
-	// board.getPointByID(9 + 10 * (i - 1) + (100 - 20 * i) * j).setPiece(bP);
-	// }
-	// }
-	// }
-	// ui.refreshWindow();
-	// }
-
-	private UIHandler.eventCallBack handleUIEventCallBack() {
-		return new UIHandler.eventCallBack() {
+	private UIHandler.EventCallBackHandler handleUIEventCallBack() {
+		return new UIHandler.EventCallBackHandler() {
 			public void onMenuBarItemClicked(UIHandler.MenubarMessage msg) {
 				handleMenuBarMessage(msg);
 			}
@@ -347,6 +227,9 @@ public class Game {
 					if (board.getSelectedPieceMovable().contains(point)) {
 						board.movePiece(selectedPiece, selectedPoint, point);
 						selectedPoint = null;
+						selectedPiece = null;
+					} else {
+						selectedPoint = point;
 					}
 				} else {
 					selectedPiece = null;
@@ -362,6 +245,7 @@ public class Game {
 			@Override
 			public void onConfirmMovement() {
 				ui.updateStatusBarStatus("confirm movement");
+				ui.addMovementHistoryRecord("confirmed move");
 			}
 
 			@Override
@@ -377,10 +261,18 @@ public class Game {
 			}
 
 			@Override
+			public ArrayList<Point> getPieceNextMovePointCandidateList() {
+				if (selectedPoint != null && selectedPiece != null)
+					return board.getSelectedPieceMovable();
+				else
+					return null;
+			}
+
+			@Override
 			public void onPieceOnPointSelected(Point point) {
-				if (selectedPiece != null && canCapture && !point.getPiece().getSide().equals(selectedPiece.getSide())
-						&& board.getSelectedPieceMovable().contains(point)) {
-					board.capture(selectedPoint, point, selectedPiece);
+				if (selectedPiece != null && canCapture && board.getSelectedPieceMovable().contains(point)) {
+					board.capture(selectedPiece, selectedPoint, point);
+					selectedPiece = null;
 					selectedPoint = null;
 				} else {
 					board.updateSelectedPieceMovable(point);

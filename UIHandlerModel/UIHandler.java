@@ -7,13 +7,13 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import BoardModel.Board;
 import BoardModel.Point;
-import PieceModel.Piece;
 
 public class UIHandler {
     //------------------------------callback message code------------------------------
@@ -43,25 +43,35 @@ public class UIHandler {
     private StatusBarHandler statusBarHandler;
     private InfoScrollPanelHandler infoPanelHandler;
     private GameAreaPanel gameAreaPanel;
-    private eventCallBack myCallBack;
+    private EventCallBackHandler myCallBack;
     private MenuBarHandler menuBarHandler;
 
     //------------------------------public callback template------------------------------
-    public interface eventCallBack {
+    public interface EventCallBackHandler {
         public void onMenuBarItemClicked(MenubarMessage msg);
+
         public void onPieceOnPointSelected(Point point);
+
         public void onPointSelected(Point point);
+
         public void onCancelMovement();
+
         public void onConfirmMovement();
+
         public void onStartGame(String playerSide);
+
         public Point getSelectedPointOrPiece();
+
+        public ArrayList<Point> getPieceNextMovePointCandidateList();
     }
 
     //------------------------------function area------------------------------
-    public UIHandler(eventCallBack g) {
-        try{
+    public UIHandler(EventCallBackHandler g) {
+        try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         myCallBack = g;
         main_window = new JFrame(app_name);
@@ -98,7 +108,7 @@ public class UIHandler {
         main_window.setLocation((srW - sW) / 2, (srH - sH) / 2);
     }
 
-    private ComponentAdapter getWindowResizeHandler(){
+    private ComponentAdapter getWindowResizeHandler() {
         return new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -109,23 +119,24 @@ public class UIHandler {
         };
     }
 
-    public double getBoardTangent(){
+    //------------------------------public APIs------------------------------
+    public double getBoardTangent() {
         return gameAreaPanel.getBoardTangent();
     }
 
-    public Dimension getScreenResolution(){
+    public Dimension getScreenResolution() {
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
 
-    public void refreshWindow(){
+    public void refreshWindow() {
         main_window.repaint();
     }
 
-    public void fitWindow(){
+    public void fitWindow() {
         main_window.pack();
     }
 
-    protected eventCallBack getCallback(){
+    protected EventCallBackHandler getCallback() {
         return myCallBack;
     }
 
@@ -133,34 +144,44 @@ public class UIHandler {
         statusBarHandler.updateStatusBarStatus(msg);
     }
 
-    public boolean getIsShowDebug(){
+    public boolean getIsShowDebug() {
         return menuBarHandler.getIsShowDebug();
     }
 
-    public boolean getIsShowPiecePlacingPoint(){
+    public boolean getIsShowPiecePlacingPoint() {
         return menuBarHandler.getIsShowPiecePlacingPoint();
     }
 
-    public void infoPanelUpdatePlayerSideData(String rowTag, String value){
+    public void infoPanelUpdatePlayerSideData(String rowTag, String value) {
         infoPanelHandler.updatePlayerSideTableRow(rowTag, value);
     }
 
-    public void infoPanelUpdatePlayerRemainingTimeData(String rowTag, String value){
+    public void infoPanelUpdatePlayerRemainingTimeData(String rowTag, String value) {
         infoPanelHandler.updatePlayerRemainingTimeTableRow(rowTag, value);
     }
+
     public void infoPanelUpdateSystemInfoData(String rowTag, String value) {
         infoPanelHandler.updateSystemInfoTableRow(rowTag, value);
     }
 
-    public void setStatusBarButtonsEnabled(boolean opt){
+    public void setStatusBarButtonsEnabled(boolean opt) {
         statusBarHandler.setButtonsEnabled(opt);
     }
 
-    public void addMovementHistoryRecord(String record){
+    public void addMovementHistoryRecord(String record) {
         infoPanelHandler.addMovementHistoryRecord(record);
     }
 
-    public void setBoard(Board b){
+    public void setBoard(Board b) {
         gameAreaPanel.setBoard(b);
     }
+
+    public void setIsShowPiecePlacingPoint(boolean opt) {
+        menuBarHandler.setIsShowPiecePlacingPoint(opt);
+    }
+
+    public boolean isBoardImageNotSet() {
+        return gameAreaPanel.isBoardImageNotSet();
+    }
+
 }

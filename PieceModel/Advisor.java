@@ -14,6 +14,7 @@ public class Advisor extends Piece {
 	@Override
 	public ArrayList<Point> move(Point p) {
 		ArrayList<Point> moves = new ArrayList<>();
+
 		try {
 			moves.add(p.getNextPointByDirection(Direction.NORTH_EAST));
 		} catch (Exception e) {
@@ -39,6 +40,7 @@ public class Advisor extends Piece {
 			if (moves.get(i) == null) {
 				moves.remove(i);
 				i--;
+				continue;
 			}
 		}
 

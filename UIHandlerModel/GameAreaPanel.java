@@ -42,21 +42,21 @@ public class GameAreaPanel extends JPanel {
         try {
             boardImage = ImageIO.read(new File(DataAndSetting.BoardData.imageLink));
             boardImageTangent = (double) boardImage.getHeight() / (double) boardImage.getWidth();
-            calcGamePanelPreferredSize();
+            calcGamePanelPreferredSize(boardImage.getWidth(), boardImage.getHeight());
         } catch (Exception e) {
-            boardPaintWidth = (int) (DataAndSetting.BoardData.preferredPixelWidth * screenBound);
-            boardPaintHeight = (int) (DataAndSetting.BoardData.preferredPixelHeight * screenBound);
-            this.setPreferredSize(new Dimension(boardPaintWidth, boardPaintHeight));
             e.printStackTrace();
-            boardImage = null;
+            calcGamePanelPreferredSize(
+                    DataAndSetting.BoardData.preferredPixelWidth,
+                    DataAndSetting.BoardData.preferredPixelHeight
+            );
         }
     }
 
-    private void calcGamePanelPreferredSize() {
+    private void calcGamePanelPreferredSize(int width, int height) {
         Dimension monitorResolution = ui.getScreenResolution();
         Boolean
-                boardImageWidthExceedScreenWidth = boardImage.getWidth() > monitorResolution.getWidth() * screenBound,
-                boardImageHeightExceedScreenHeight = boardImage.getHeight() > monitorResolution.getHeight() * screenBound;
+                boardImageWidthExceedScreenWidth = width > monitorResolution.getWidth() * screenBound,
+                boardImageHeightExceedScreenHeight = height > monitorResolution.getHeight() * screenBound;
 
         if (boardImageWidthExceedScreenWidth && boardImageHeightExceedScreenHeight) {
 
@@ -90,8 +90,8 @@ public class GameAreaPanel extends JPanel {
 
         } else {
 
-            boardPaintWidth = boardImage.getWidth();
-            boardPaintHeight = boardImage.getHeight();
+            boardPaintWidth = width;
+            boardPaintHeight = height;
 
         }
         this.setPreferredSize(new Dimension(boardPaintWidth, boardPaintHeight));
@@ -130,12 +130,24 @@ public class GameAreaPanel extends JPanel {
             g.drawImage(boardImage, boardBaseXShift, boardBaseYShift, boardPaintWidth, boardPaintHeight, null);
 
         if (board != null) {
-            if (ui.getIsShowPiecePlacingPoint()) drawPiecePlacingPoints(g);
+            if (ui.getIsShowPiecePlacingPoint()) drawAllPiecePlacingPointsForDebug(g);
             drawCurrentPieces(g);
             drawFrameForSelectedObject(g);
+            drawPieceNextMoveCandidatePoints(g);
         }
 
         if (ui.getIsShowDebug()) printDebugLog(g);
+    }
+
+    private void drawAllPiecePlacingPointsForDebug(Graphics g){
+        if (board!=null)
+        drawPiecePlacingPoints(g, board.getPoints(), new Color(0f ,0f ,1f, 0.5f), true);
+    }
+
+    private void drawPieceNextMoveCandidatePoints(Graphics g){
+        ArrayList<Point> points = ui.getCallback().getPieceNextMovePointCandidateList();
+        if (points==null) return;
+        drawPiecePlacingPoints(g, points, new Color(1f, 0f, 0f, 0.5f), false);
     }
 
     private void drawFrameForSelectedObject(Graphics g) {
@@ -189,6 +201,9 @@ public class GameAreaPanel extends JPanel {
         printString(g, "board image tanget", new double[]{boardImageTangent});
         printString(g, "board paint size", new double[]{boardPaintWidth, boardPaintHeight});
         printString(g, "board panel size", new double[]{this.getWidth(), this.getHeight()});
+        printString(g, "selected Point: ", new double[]{
+                ui.getCallback().getSelectedPointOrPiece() == null ? -1 : ui.getCallback().getSelectedPointOrPiece().getId()
+        });
     }
 
     private void drawCurrentPieces(Graphics g) {
@@ -210,18 +225,20 @@ public class GameAreaPanel extends JPanel {
         }
     }
 
-    private void drawPiecePlacingPoints(Graphics g) {
-        for (Point p : board.getPoints()) {
-            int
-                    w = (int) (p.getWidth() * boardPaintWidth),
-                    h = (int) (p.getHeight() * boardPaintHeight),
-                    x = (int) ((p.getPosX() - p.getWidth() / 2) * boardPaintWidth + boardBaseXShift),
-                    y = (int) ((p.getPosY() - p.getHeight() / 2) * boardPaintHeight + boardBaseYShift);
+    private void drawPiecePlacingPoints(Graphics g, ArrayList<Point>points, Color color, boolean showID) {
+        for (Point p : points) {
+            if(p != null) {
+                int
+                        w = (int) (p.getWidth() * boardPaintWidth),
+                        h = (int) (p.getHeight() * boardPaintHeight),
+                        x = (int) ((p.getPosX() - p.getWidth() / 2) * boardPaintWidth + boardBaseXShift),
+                        y = (int) ((p.getPosY() - p.getHeight() / 2) * boardPaintHeight + boardBaseYShift);
 
-            g.setColor(new Color(0.0f, 0.0f, 1.0f, 0.5f));
-            g.fillRect(x, y, w, h);
-            g.setColor(Color.red);
-            g.drawString(p.getId() + "", x + w / 2, y + h / 2);
+                g.setColor(color);
+                g.fillRect(x, y, w, h);
+                g.setColor(Color.green);
+                if (showID) g.drawString(p.getId() + "", x + w / 2, y + h / 2);
+            }
         }
     }
 
@@ -264,7 +281,7 @@ public class GameAreaPanel extends JPanel {
                 else
                     ui.getCallback().onPointSelected(null);
 
-                repaint();
+                ui.refreshWindow();
             }
         };
     }
@@ -299,6 +316,10 @@ public class GameAreaPanel extends JPanel {
 
     public void setBoard(Board b) {
         board = b;
-        repaint();
+        ui.refreshWindow();
+    }
+
+    public boolean isBoardImageNotSet(){
+        return boardImage == null;
     }
 }
