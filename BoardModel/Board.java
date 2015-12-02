@@ -52,8 +52,13 @@ public class Board {
 		return points;
 	}
 
-	public void updateSelectedPieceMovable(Point p) {
+	public void updateSelectedPieceMovable(Point p, String currentSide) {
 		selectedPieceMovable.clear();
+
+		if (!p.getPiece().getSide().equals(currentSide)) {
+			return;
+		}
+
 		for (int i = 0; i < p.getPieceInsideMovable().size(); i++) {
 			try {
 				if (!p.getPieceInsideMovable().get(i).getPiece().getSide().equals(p.getPiece().getSide())) {
@@ -77,5 +82,9 @@ public class Board {
 	public void movePiece(Piece piece, Point fromPoint, Point toPoint) {
 		toPoint.setPiece(piece);
 		fromPoint.setPiece(null);
+	}
+
+	public String getMoveString(Piece piece, Point fromPoint, Point toPoint) {
+		return piece.getName() + " from " + fromPoint.getId() + " to " + toPoint.getId();
 	}
 }

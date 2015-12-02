@@ -7,8 +7,8 @@ import BoardModel.Edge.Direction;
 
 public class General extends Piece {
 
-	public General(String s, String l, double w, double h) {
-		super(s, l, w, h);
+	public General(String s, String l, double w, double h, String n) {
+		super(s, l, w, h, n);
 	}
 
 	@Override

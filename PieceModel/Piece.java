@@ -17,19 +17,21 @@ public abstract class Piece {
     }
     private static int idCounter=0;
     private int id;
+    private String name;
     String side;
     BufferedImage pieceImage;
     private String imageLink;
     //private Point point;
     private double height, width; // 0 to 1
 
-    public Piece(String s, String l, double w, double h){
+    public Piece(String s, String l, double w, double h, String n){
         id = idCounter;
         idCounter++;
         imageLink = l;
         side = s;
         height = h;
         width = w;
+        name = n;
         try{
             pieceImage = ImageIO.read(new File(imageLink));
         }catch (Exception e){
@@ -57,6 +59,9 @@ public abstract class Piece {
     }
     public String getImageLink(){
         return imageLink;
+    }
+    public String getName(){
+    	return name;
     }
     /*public void setPoint(Point p){
         point = p;

@@ -6,8 +6,8 @@ import BoardModel.Edge.Direction;
 import BoardModel.Point;
 
 public class Soldier extends Piece {
-	public Soldier(String s, String l, double w, double h) {
-		super(s, l, w, h);
+	public Soldier(String s, String l, double w, double h, String n) {
+		super(s, l, w, h, n);
 	}
 
 	@Override

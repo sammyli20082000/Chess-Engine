@@ -32,21 +32,21 @@ public class Game {
 	}
 
 	public Game() {
-		//set location
+		// set location
 		myLocation = (new File(Game.class.getClassLoader().getResource("").getPath())).getAbsolutePath();
-		
-		//set board
+
+		// set board
 		board = new Board();
 		board.setImageLink("pic/board.png");
-		
-		//set chess type
+
+		// set chess type
 		canCapture = true;
-		
+
 		sides.add(Piece.PlayerSide.RED);
 		sides.add(Piece.PlayerSide.BLACK);
-		
+
 		ai = new AI(this);
-		
+
 		ui = new UIHandler(handleUIEventCallBack());
 		addDataToInfoPanel();
 		ui.setBoard(board);
@@ -109,41 +109,41 @@ public class Game {
 			case 0:
 			case 80:
 				Piece rc = new Chariot(Piece.PlayerSide.BLACK, "pic/black_chariot.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¨®");
 				board.getPointByID(i).setPiece(rc);
 				currPieces.add(rc);
 				break;
 			case 10:
 			case 70:
 				Piece rh = new Horse(Piece.PlayerSide.BLACK, "pic/black_horse.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "°¨");
 				board.getPointByID(i).setPiece(rh);
 				currPieces.add(rh);
 				break;
 			case 20:
 			case 60:
 				Piece re = new Elephant(Piece.PlayerSide.BLACK, "pic/black_elephant.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¶H");
 				board.getPointByID(i).setPiece(re);
 				currPieces.add(re);
 				break;
 			case 30:
 			case 50:
 				Piece ra = new Advisor(Piece.PlayerSide.BLACK, "pic/black_advisor.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¤h");
 				board.getPointByID(i).setPiece(ra);
 				currPieces.add(ra);
 				break;
 			case 40:
 				Piece rg = new General(Piece.PlayerSide.BLACK, "pic/black_general.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "±N");
 				board.getPointByID(i).setPiece(rg);
 				currPieces.add(rg);
 				break;
 			case 12:
 			case 72:
 				Piece rp = new Cannon(Piece.PlayerSide.BLACK, "pic/black_cannon.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¥]");
 				board.getPointByID(i).setPiece(rp);
 				currPieces.add(rp);
 				break;
@@ -153,7 +153,7 @@ public class Game {
 			case 63:
 			case 83:
 				Piece rs = new Soldier(Piece.PlayerSide.BLACK, "pic/black_soldier.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¨ò");
 				board.getPointByID(i).setPiece(rs);
 				currPieces.add(rs);
 				break;
@@ -161,41 +161,41 @@ public class Game {
 			case 9:
 			case 89:
 				Piece bc = new Chariot(Piece.PlayerSide.RED, "pic/red_chariot.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "’¬");
 				board.getPointByID(i).setPiece(bc);
 				currPieces.add(bc);
 				break;
 			case 19:
 			case 79:
 				Piece bh = new Horse(Piece.PlayerSide.RED, "pic/red_horse.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "ØX");
 				board.getPointByID(i).setPiece(bh);
 				currPieces.add(bh);
 				break;
 			case 29:
 			case 69:
 				Piece be = new Elephant(Piece.PlayerSide.RED, "pic/red_elephant.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¬Û");
 				board.getPointByID(i).setPiece(be);
 				currPieces.add(be);
 				break;
 			case 39:
 			case 59:
 				Piece ba = new Advisor(Piece.PlayerSide.RED, "pic/red_advisor.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¥K");
 				board.getPointByID(i).setPiece(ba);
 				currPieces.add(ba);
 				break;
 			case 49:
 				Piece bg = new General(Piece.PlayerSide.RED, "pic/red_general.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "«Ó");
 				board.getPointByID(i).setPiece(bg);
 				currPieces.add(bg);
 				break;
 			case 17:
 			case 77:
 				Piece bp = new Cannon(Piece.PlayerSide.RED, "pic/red_cannon.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "¬¶");
 				board.getPointByID(i).setPiece(bp);
 				currPieces.add(bp);
 				break;
@@ -205,7 +205,7 @@ public class Game {
 			case 66:
 			case 86:
 				Piece bs = new Soldier(Piece.PlayerSide.RED, "pic/red_soldier.png", diffX * squareConst,
-						diffX * squareConst / boardTangent);
+						diffX * squareConst / boardTangent, "§L");
 				board.getPointByID(i).setPiece(bs);
 				currPieces.add(bs);
 				break;
@@ -222,35 +222,29 @@ public class Game {
 			}
 
 			@Override
-			public void onPointSelected(Point point) {
-				if (selectedPiece != null && point != null) {
-					if (board.getSelectedPieceMovable().contains(point)) {
-						board.movePiece(selectedPiece, selectedPoint, point);
-						selectedPoint = null;
-						selectedPiece = null;
-					} else {
-						selectedPoint = point;
-					}
-				} else {
-					selectedPiece = null;
-					selectedPoint = point;
-				}
-			}
-
-			@Override
 			public void onCancelMovement() {
-				ui.updateStatusBarStatus("cancel movement");
+				// ui.updateStatusBarStatus("cancel movement");
 			}
 
 			@Override
 			public void onConfirmMovement() {
-				ui.updateStatusBarStatus("confirm movement");
-				ui.addMovementHistoryRecord("confirmed move");
+				// ui.updateStatusBarStatus("confirm movement");
+				// ui.addMovementHistoryRecord("confirmed move");
 			}
 
 			@Override
 			public void onStartGame(String playerSide) {
+				// define starter side
 				ui.updateStatusBarStatus("Start game: " + playerSide);
+				switch (playerSide) {
+				case "Player 1":
+					currentSide = Piece.PlayerSide.RED;
+					break;
+				case "Computer":
+					currentSide = Piece.PlayerSide.BLACK;
+					break;
+				}
+
 				addPointsPiecesEdgesToBoard();
 				ui.setStatusBarButtonsEnabled(true);
 			}
@@ -269,13 +263,49 @@ public class Game {
 			}
 
 			@Override
+			public void onPointSelected(Point point) {
+				if (selectedPiece != null && point != null) {
+					if (board.getSelectedPieceMovable().contains(point)) {
+						// move
+						board.movePiece(selectedPiece, selectedPoint, point);
+
+						// update move history and status bar
+						ui.updateStatusBarStatus(board.getMoveString(selectedPiece, selectedPoint, point));
+						ui.addMovementHistoryRecord(board.getMoveString(selectedPiece, selectedPoint, point));
+
+						// reset point and piece
+						selectedPoint = null;
+						selectedPiece = null;
+
+						// change side
+						currentSide = sides.get((sides.indexOf(currentSide) + 1) % sides.size());
+					} else {
+						selectedPoint = point;
+					}
+				} else {
+					selectedPiece = null;
+					selectedPoint = point;
+				}
+			}
+
+			@Override
 			public void onPieceOnPointSelected(Point point) {
 				if (selectedPiece != null && canCapture && board.getSelectedPieceMovable().contains(point)) {
+					// capture
 					board.capture(selectedPiece, selectedPoint, point);
+
+					// update move history and status bar
+					ui.updateStatusBarStatus(board.getMoveString(selectedPiece, selectedPoint, point));
+					ui.addMovementHistoryRecord(board.getMoveString(selectedPiece, selectedPoint, point));
+
+					// reset point and piece
 					selectedPiece = null;
 					selectedPoint = null;
+
+					// change side
+					currentSide = sides.get((sides.indexOf(currentSide) + 1) % sides.size());
 				} else {
-					board.updateSelectedPieceMovable(point);
+					board.updateSelectedPieceMovable(point, currentSide);
 					selectedPiece = point.getPiece();
 					selectedPoint = point;
 				}

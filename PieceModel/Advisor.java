@@ -7,8 +7,8 @@ import BoardModel.Edge.Direction;
 
 public class Advisor extends Piece {
 
-	public Advisor(String s, String l, double w, double h) {
-		super(s, l, w, h);
+	public Advisor(String s, String l, double w, double h, String n) {
+		super(s, l, w, h, n);
 	}
 
 	@Override
