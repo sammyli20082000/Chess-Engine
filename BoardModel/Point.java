@@ -1,4 +1,5 @@
 package BoardModel;
+
 import java.util.*;
 
 import PieceModel.Piece;
@@ -8,16 +9,14 @@ public class Point {
 	private int id;
 	private Piece piece;
 	private Map<Edge.Direction, Point> edges = new HashMap<Edge.Direction, Point>();
-	private double
-			posX, posY, // 0 to 1, position on graphic, coordinate of center of image
+	private double posX, posY, // 0 to 1, position on graphic, coordinate of
+								// center of image
 			width, height; // 0 to 1, position on graphic
 	private ArrayList<Point> pieceInsideMovable = new ArrayList<Point>();
-	
-	public Point(double x, double y, double w, double h){
+
+	public Point(double x, double y, double w, double h) {
 		id = idCounter;
 		idCounter++;
-
-		for(Edge.Direction n : Edge.Direction.values())
 
 		posX = x;
 		posY = y;
@@ -26,23 +25,23 @@ public class Point {
 		piece = null;
 	}
 
-	public int getId(){
+	public int getId() {
 		return id;
 	}
 
-	public Piece getPiece(){
+	public Piece getPiece() {
 		return piece;
 	}
 
-	public double getPosX(){
+	public double getPosX() {
 		return posX;
 	}
 
-	public double getPosY(){
+	public double getPosY() {
 		return posY;
 	}
 
-	public double getWidth(){
+	public double getWidth() {
 		return width;
 	}
 
@@ -50,18 +49,20 @@ public class Point {
 		return height;
 	}
 
-	public void setPiece(Piece p){
+	public void setPiece(Piece p) {
 		piece = p;
 	}
 
-	public void addEdge(Edge.Direction dir, Point point) { edges.put(dir, point); }
-	
-	public Point getNextPointByDirection(Edge.Direction dir){
+	public void addEdge(Edge.Direction dir, Point point) {
+		edges.put(dir, point);
+	}
+
+	public Point getNextPointByDirection(Edge.Direction dir) {
 		return edges.get(dir);
 	}
-	
+
 	public ArrayList<Point> getPieceInsideMovable() {
-		pieceInsideMovable = getPiece().move(this);
+		pieceInsideMovable = getPiece().moveInvolvingOtherPiece(this);
 		return pieceInsideMovable;
 	}
 	

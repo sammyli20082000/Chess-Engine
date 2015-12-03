@@ -12,107 +12,8 @@ public class Elephant extends Piece {
 	}
 
 	@Override
-	public ArrayList<Point> move(Point p) {
+	protected ArrayList<Point> moveIndependently(Point p) {
 		ArrayList<Point> moves = new ArrayList<>();
-//		if (this.getSide().equals(Piece.PlayerSide.RED)) {
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.EAST)
-//						.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.EAST);
-//				if (temp.getId() % 10 >= 5) {
-//					if (p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.EAST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.WEST)
-//						.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.WEST);
-//				if (temp.getId() % 10 >= 5) {
-//					if (p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.WEST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.EAST)
-//						.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.EAST);
-//				if (temp.getId() % 10 >= 5) {
-//					if (p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.EAST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.WEST)
-//						.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.WEST);
-//				if (temp.getId() % 10 >= 5) {
-//					if (p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.WEST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//		} else if (this.getSide().equals(Piece.PlayerSide.BLACK)) {
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.EAST)
-//						.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.EAST);
-//				if (temp.getId() % 10 <= 4) {
-//					if (p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.EAST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.WEST)
-//						.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.WEST);
-//				if (temp.getId() % 10 <= 4) {
-//					if (p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.WEST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.EAST)
-//						.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.EAST);
-//				if (temp.getId() % 10 <= 4) {
-//					if (p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.EAST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//			try {
-//				Point temp = p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.WEST)
-//						.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.WEST);
-//				if (temp.getId() % 10 <= 4) {
-//					if (p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.WEST)
-//							.getPiece() == null) {
-//						moves.add(temp);
-//					}
-//				}
-//			} catch (Exception e) {
-//
-//			}
-//		}
 		
 		try {
 			moves.add(p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.NORTH)
@@ -162,5 +63,10 @@ public class Elephant extends Piece {
 		}
 
 		return moves;
+	}
+
+	@Override
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		return moveIndependently(p);
 	}
 }

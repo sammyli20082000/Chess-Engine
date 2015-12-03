@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import PieceModel.Cannon;
 import PieceModel.Elephant;
+import PieceModel.Horse;
 import PieceModel.Piece;
 
 public class Board {
@@ -53,21 +55,21 @@ public class Board {
 	}
 
 	public void updateSelectedPieceMovable(Point p, String currentSide) {
-		selectedPieceMovable.clear();
+		selectedPieceMovable = new ArrayList<>(p.getPieceInsideMovable());
 
-		if (!p.getPiece().getSide().equals(currentSide)) {
-			return;
-		}
-
-		for (int i = 0; i < p.getPieceInsideMovable().size(); i++) {
-			try {
-				if (!p.getPieceInsideMovable().get(i).getPiece().getSide().equals(p.getPiece().getSide())) {
-					selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
-				}
-			} catch (Exception e) {
-				selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
-			}
-		}
+//		if (!p.getPiece().getSide().equals(currentSide)) {
+//			return;
+//		}
+//
+//		for (int i = 0; i < p.getPieceInsideMovable().size(); i++) {
+//			try {
+//				if (!p.getPieceInsideMovable().get(i).getPiece().getSide().equals(p.getPiece().getSide())) {
+//					selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
+//				}
+//			} catch (Exception e) {
+//				selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
+//			}
+//		}
 	}
 
 	public ArrayList<Point> getSelectedPieceMovable() {

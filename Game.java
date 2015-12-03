@@ -1,5 +1,7 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import BoardModel.Board;
 import BoardModel.Edge.Direction;
@@ -17,15 +19,19 @@ import UIHandlerModel.UIHandler;
 public class Game {
 	Board board;
 	AI ai;
+
 	boolean canCapture;
 	ArrayList<String> sides = new ArrayList<>();
+
 	String currentSide;
 	ArrayList<Piece> currPieces;
+	ArrayList<Node> history;
+
 	Piece selectedPiece;
 	Point selectedPoint;
-	Node tree_root;
+
 	UIHandler ui;
-	String myLocation;
+	String gameLocation;
 
 	public static void main(String[] args) {
 		new Game();
@@ -33,7 +39,7 @@ public class Game {
 
 	public Game() {
 		// set location
-		myLocation = (new File(Game.class.getClassLoader().getResource("").getPath())).getAbsolutePath();
+		gameLocation = (new File(Game.class.getClassLoader().getResource("").getPath())).getAbsolutePath();
 
 		// set board
 		board = new Board();
@@ -247,6 +253,15 @@ public class Game {
 
 				addPointsPiecesEdgesToBoard();
 				ui.setStatusBarButtonsEnabled(true);
+
+				history = new ArrayList<>();
+				Map<Integer, Integer> state = new HashMap<>();
+				for (Point everyPoint : board.getPoints()) {
+					if (everyPoint.getPiece() != null) {
+						state.put(everyPoint.getId(), everyPoint.getPiece().getId());
+					}
+				}
+				history.add(new Node(state, currentSide));
 			}
 
 			@Override
@@ -268,17 +283,27 @@ public class Game {
 					if (board.getSelectedPieceMovable().contains(point)) {
 						// move
 						board.movePiece(selectedPiece, selectedPoint, point);
+						System.out.println("Move!");
+
+						// change side
+						currentSide = sides.get((sides.indexOf(currentSide) + 1) % sides.size());
 
 						// update move history and status bar
 						ui.updateStatusBarStatus(board.getMoveString(selectedPiece, selectedPoint, point));
 						ui.addMovementHistoryRecord(board.getMoveString(selectedPiece, selectedPoint, point));
+						Map<Integer, Integer> state = new HashMap<>();
+						for (Point everyPoint : board.getPoints()) {
+							if (everyPoint.getPiece() != null) {
+								state.put(everyPoint.getId(), everyPoint.getPiece().getId());
+							}
+						}
+						history.add(
+								new Node(state, currentSide, board.getMoveString(selectedPiece, selectedPoint, point),
+										history.get(history.size() - 1)));
 
 						// reset point and piece
 						selectedPoint = null;
 						selectedPiece = null;
-
-						// change side
-						currentSide = sides.get((sides.indexOf(currentSide) + 1) % sides.size());
 					} else {
 						selectedPoint = point;
 					}
@@ -293,22 +318,51 @@ public class Game {
 				if (selectedPiece != null && canCapture && board.getSelectedPieceMovable().contains(point)) {
 					// capture
 					board.capture(selectedPiece, selectedPoint, point);
+					System.out.println("Capture!");
+
+					// change side
+					currentSide = sides.get((sides.indexOf(currentSide) + 1) % sides.size());
 
 					// update move history and status bar
 					ui.updateStatusBarStatus(board.getMoveString(selectedPiece, selectedPoint, point));
 					ui.addMovementHistoryRecord(board.getMoveString(selectedPiece, selectedPoint, point));
+					Map<Integer, Integer> state = new HashMap<>();
+					for (Point everyPoint : board.getPoints()) {
+						if (everyPoint.getPiece() != null) {
+							state.put(everyPoint.getId(), everyPoint.getPiece().getId());
+						}
+					}
+					history.add(new Node(state, currentSide, board.getMoveString(selectedPiece, selectedPoint, point),
+							history.get(history.size() - 1)));
 
 					// reset point and piece
 					selectedPiece = null;
 					selectedPoint = null;
-
-					// change side
-					currentSide = sides.get((sides.indexOf(currentSide) + 1) % sides.size());
 				} else {
 					board.updateSelectedPieceMovable(point, currentSide);
 					selectedPiece = point.getPiece();
 					selectedPoint = point;
 				}
+			}
+
+			@Override
+			public void onUndo(int undoStep) {
+				Node nodeGoingBackTo = history.get(history.size() - 1 - undoStep);
+
+				currentSide = nodeGoingBackTo.getState().getSide();
+				for (Point point : board.getPoints()) {
+					if(nodeGoingBackTo.getState().getPointsState().containsKey(point.getId())) {
+						point.setPiece(currPieces.get(nodeGoingBackTo.getState().getPointsState().get(point.getId())));
+					} else {
+						point.setPiece(null);
+					}
+				}
+
+				for (int i = 0; i < undoStep; i++) {
+					history.remove(history.size() - 1);
+				}
+				
+				ui.refreshWindow();
 			}
 		};
 	}

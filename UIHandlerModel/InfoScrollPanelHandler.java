@@ -242,8 +242,9 @@ public class InfoScrollPanelHandler {
                 if(!thisButton.isEnabled()) return;
                 int listSize = ((DefaultListModel)movementHistoryList.getModel()).getSize(), selectedIndex= movementHistoryList.getSelectedIndex();
                 if (listSize ==0) return;
+                ui.getCallback().onUndo(listSize - selectedIndex);
                 for(int i=0; i<listSize - selectedIndex; i++){
-                    ui.getCallback().onMenuBarItemClicked(UIHandler.MenubarMessage.MENUITEM_STEP_UNDO);
+                    
                     ((DefaultListModel)movementHistoryList.getModel()).remove(
                             ((DefaultListModel) movementHistoryList.getModel()).getSize() - 1
                     );

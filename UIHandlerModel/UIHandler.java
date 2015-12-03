@@ -63,6 +63,8 @@ public class UIHandler {
         public Point getSelectedPointOrPiece();
 
         public ArrayList<Point> getPieceNextMovePointCandidateList();
+        
+        public void onUndo(int undoStep);
     }
 
     //------------------------------function area------------------------------

@@ -63,9 +63,8 @@ public abstract class Piece {
     public String getName(){
     	return name;
     }
-    /*public void setPoint(Point p){
-        point = p;
-    }*/
-    public abstract ArrayList<Point> move(Point p);
+    
+    protected abstract ArrayList<Point> moveIndependently(Point p);
 
+    public abstract ArrayList<Point> moveInvolvingOtherPiece(Point p);
 }

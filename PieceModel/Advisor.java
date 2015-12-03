@@ -12,7 +12,7 @@ public class Advisor extends Piece {
 	}
 
 	@Override
-	public ArrayList<Point> move(Point p) {
+	protected ArrayList<Point> moveIndependently(Point p) {
 		ArrayList<Point> moves = new ArrayList<>();
 
 		try {
@@ -45,6 +45,11 @@ public class Advisor extends Piece {
 		}
 
 		return moves;
+	}
+
+	@Override
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		return moveIndependently(p);
 	}
 
 }

@@ -11,7 +11,7 @@ public class Soldier extends Piece {
 	}
 
 	@Override
-	public ArrayList<Point> move(Point p) {
+	protected ArrayList<Point> moveIndependently(Point p) {
 		ArrayList<Point> moves = new ArrayList<>();
 		if (this.getSide().equals(Piece.PlayerSide.RED)) {
 			if (p.getId() % 10 <= 4) {
@@ -41,5 +41,10 @@ public class Soldier extends Piece {
 		}
 		
 		return moves;
+	}
+
+	@Override
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		return moveIndependently(p);
 	}
 }

@@ -12,7 +12,7 @@ public class Horse extends Piece {
 	}
 
 	@Override
-	public ArrayList<Point> move(Point p) {
+	protected ArrayList<Point> moveIndependently(Point p) {
 		ArrayList<Point> moves = new ArrayList<>();
 
 		try {
@@ -75,4 +75,8 @@ public class Horse extends Piece {
 		return moves;
 	}
 
+	@Override
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		return moveIndependently(p);
+	}
 }
