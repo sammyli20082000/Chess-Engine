@@ -1,4 +1,4 @@
-package UIHandlerModel;
+package Executable.UIHandlerModel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import BoardModel.Board;
-import BoardModel.Point;
-import PieceModel.Piece;
+import Executable.BoardModel.Board;
+import Executable.BoardModel.Point;
+import Executable.DataAndSetting;
+import Executable.PieceModel.Piece;
 
 /**
  * Created by him on 29/10/2015.
@@ -45,6 +46,7 @@ public class GameAreaPanel extends JPanel {
             calcGamePanelPreferredSize(boardImage.getWidth(), boardImage.getHeight());
         } catch (Exception e) {
             e.printStackTrace();
+            boardImageTangent = 1.0 * DataAndSetting.BoardData.preferredPixelHeight / DataAndSetting.BoardData.preferredPixelWidth;
             calcGamePanelPreferredSize(
                     DataAndSetting.BoardData.preferredPixelWidth,
                     DataAndSetting.BoardData.preferredPixelHeight
@@ -243,18 +245,18 @@ public class GameAreaPanel extends JPanel {
     }
 
     public void notifyWindowResized() {
-        gamePanelTangent = (double) this.getHeight() / this.getWidth();
+        gamePanelTangent = 1.0 * this.getHeight() / this.getWidth();
         if (boardImage != null && gamePanelTangent != boardImageTangent) {
             if (gamePanelTangent > boardImageTangent) {
                 boardBaseXShift = 0;
                 boardPaintWidth = this.getWidth();
-                boardPaintHeight = (int) (boardPaintWidth * boardImageTangent);
-                boardBaseYShift = (this.getHeight() - boardPaintHeight) / 2;
+                boardPaintHeight = (int) (1.0 * boardPaintWidth * boardImageTangent);
+                boardBaseYShift = (int)(1.0 * (this.getHeight() - boardPaintHeight) / 2);
             } else {
                 boardBaseYShift = 0;
                 boardPaintHeight = this.getHeight();
-                boardPaintWidth = (int) (boardPaintHeight / boardImageTangent);
-                boardBaseXShift = (this.getWidth() - boardPaintWidth) / 2;
+                boardPaintWidth = (int) (1.0 * boardPaintHeight / boardImageTangent);
+                boardBaseXShift = (int) (1.0 * (this.getWidth() - boardPaintWidth) / 2);
             }
         } else {
             boardBaseXShift = 0;
@@ -309,7 +311,7 @@ public class GameAreaPanel extends JPanel {
 
     public double getBoardTangent() {
         if (boardImage == null)
-            return 1.0 * this.getHeight() / this.getWidth();
+            return 1.0 * DataAndSetting.BoardData.preferredPixelHeight / DataAndSetting.BoardData.preferredPixelWidth;
         else
             return boardImageTangent;
     }

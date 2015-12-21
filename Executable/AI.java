@@ -1,3 +1,4 @@
+package Executable;
 
 public class AI{
 	Game game;

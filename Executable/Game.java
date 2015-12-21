@@ -1,20 +1,22 @@
+package Executable;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import BoardModel.Board;
-import BoardModel.Edge.Direction;
-import BoardModel.Point;
-import PieceModel.Advisor;
-import PieceModel.Cannon;
-import PieceModel.Chariot;
-import PieceModel.Elephant;
-import PieceModel.General;
-import PieceModel.Horse;
-import PieceModel.Piece;
-import PieceModel.Soldier;
-import UIHandlerModel.UIHandler;
+import Executable.BoardModel.Board;
+import Executable.BoardModel.Edge.Direction;
+import Executable.BoardModel.Point;
+import Executable.PieceModel.Advisor;
+import Executable.PieceModel.Cannon;
+import Executable.PieceModel.Chariot;
+import Executable.PieceModel.Elephant;
+import Executable.PieceModel.General;
+import Executable.PieceModel.Horse;
+import Executable.PieceModel.Piece;
+import Executable.PieceModel.Soldier;
+import Executable.UIHandlerModel.UIHandler;
 
 public class Game {
 	Board board;
@@ -115,41 +117,41 @@ public class Game {
 			case 0:
 			case 80:
 				Piece rc = new Chariot(Piece.PlayerSide.BLACK, "pic/black_chariot.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¨®");
+						diffX * squareConst / boardTangent, "\u8eca");
 				board.getPointByID(i).setPiece(rc);
 				currPieces.add(rc);
 				break;
 			case 10:
 			case 70:
 				Piece rh = new Horse(Piece.PlayerSide.BLACK, "pic/black_horse.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "°¨");
+						diffX * squareConst / boardTangent, "\u99ac");
 				board.getPointByID(i).setPiece(rh);
 				currPieces.add(rh);
 				break;
 			case 20:
 			case 60:
 				Piece re = new Elephant(Piece.PlayerSide.BLACK, "pic/black_elephant.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¶H");
+						diffX * squareConst / boardTangent, "\u8c61");
 				board.getPointByID(i).setPiece(re);
 				currPieces.add(re);
 				break;
 			case 30:
 			case 50:
 				Piece ra = new Advisor(Piece.PlayerSide.BLACK, "pic/black_advisor.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¤h");
+						diffX * squareConst / boardTangent, "\u58eb");
 				board.getPointByID(i).setPiece(ra);
 				currPieces.add(ra);
 				break;
 			case 40:
 				Piece rg = new General(Piece.PlayerSide.BLACK, "pic/black_general.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "±N");
+						diffX * squareConst / boardTangent, "\u5c07");
 				board.getPointByID(i).setPiece(rg);
 				currPieces.add(rg);
 				break;
 			case 12:
 			case 72:
 				Piece rp = new Cannon(Piece.PlayerSide.BLACK, "pic/black_cannon.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¥]");
+						diffX * squareConst / boardTangent, "\u7832");
 				board.getPointByID(i).setPiece(rp);
 				currPieces.add(rp);
 				break;
@@ -159,7 +161,7 @@ public class Game {
 			case 63:
 			case 83:
 				Piece rs = new Soldier(Piece.PlayerSide.BLACK, "pic/black_soldier.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¨ò");
+						diffX * squareConst / boardTangent, "\u5352");
 				board.getPointByID(i).setPiece(rs);
 				currPieces.add(rs);
 				break;
@@ -167,41 +169,41 @@ public class Game {
 			case 9:
 			case 89:
 				Piece bc = new Chariot(Piece.PlayerSide.RED, "pic/red_chariot.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "’¬");
+						diffX * squareConst / boardTangent, "\u4fe5");
 				board.getPointByID(i).setPiece(bc);
 				currPieces.add(bc);
 				break;
 			case 19:
 			case 79:
 				Piece bh = new Horse(Piece.PlayerSide.RED, "pic/red_horse.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "ØX");
+						diffX * squareConst / boardTangent, "\u508c");
 				board.getPointByID(i).setPiece(bh);
 				currPieces.add(bh);
 				break;
 			case 29:
 			case 69:
 				Piece be = new Elephant(Piece.PlayerSide.RED, "pic/red_elephant.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¬Û");
+						diffX * squareConst / boardTangent, "\u76f8");
 				board.getPointByID(i).setPiece(be);
 				currPieces.add(be);
 				break;
 			case 39:
 			case 59:
 				Piece ba = new Advisor(Piece.PlayerSide.RED, "pic/red_advisor.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¥K");
+						diffX * squareConst / boardTangent, "\u4ed5");
 				board.getPointByID(i).setPiece(ba);
 				currPieces.add(ba);
 				break;
 			case 49:
 				Piece bg = new General(Piece.PlayerSide.RED, "pic/red_general.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "«Ó");
+						diffX * squareConst / boardTangent, "\u5e25");
 				board.getPointByID(i).setPiece(bg);
 				currPieces.add(bg);
 				break;
 			case 17:
 			case 77:
 				Piece bp = new Cannon(Piece.PlayerSide.RED, "pic/red_cannon.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "¬¶");
+						diffX * squareConst / boardTangent, "\u70ae");
 				board.getPointByID(i).setPiece(bp);
 				currPieces.add(bp);
 				break;
@@ -211,7 +213,7 @@ public class Game {
 			case 66:
 			case 86:
 				Piece bs = new Soldier(Piece.PlayerSide.RED, "pic/red_soldier.png", diffX * squareConst,
-						diffX * squareConst / boardTangent, "§L");
+						diffX * squareConst / boardTangent, "\u5175");
 				board.getPointByID(i).setPiece(bs);
 				currPieces.add(bs);
 				break;

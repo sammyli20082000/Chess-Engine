@@ -1,4 +1,4 @@
-package PieceModel;
+package Executable.PieceModel;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import BoardModel.Board;
-import BoardModel.Point;
+import Executable.BoardModel.Board;
+import Executable.BoardModel.Point;
 
 public abstract class Piece {
     public static class PlayerSide{

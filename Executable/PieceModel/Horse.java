@@ -1,9 +1,9 @@
-package PieceModel;
+package Executable.PieceModel;
 
-import BoardModel.Edge.Direction;
+import Executable.BoardModel.Edge.Direction;
 import java.util.ArrayList;
 
-import BoardModel.Point;
+import Executable.BoardModel.Point;
 
 public class Horse extends Piece {
 

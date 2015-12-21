@@ -1,9 +1,9 @@
-package PieceModel;
+package Executable.PieceModel;
 
 import java.util.ArrayList;
 
-import BoardModel.Point;
-import BoardModel.Edge.Direction;
+import Executable.BoardModel.Point;
+import Executable.BoardModel.Edge.Direction;
 
 public class General extends Piece {
 

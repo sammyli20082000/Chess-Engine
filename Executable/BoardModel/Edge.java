@@ -1,4 +1,4 @@
-package BoardModel;
+package Executable.BoardModel;
 
 public class Edge {
 	public enum Direction{

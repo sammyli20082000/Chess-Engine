@@ -1,4 +1,4 @@
-package UIHandlerModel;
+package Executable.UIHandlerModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -90,7 +90,7 @@ public class MenuBarHandler {
         return myMenuBar;
     }
 
-    private ActionListener getMenuItemActionListener(final UIHandlerModel.UIHandler.MenubarMessage msg){
+    private ActionListener getMenuItemActionListener(final UIHandler.MenubarMessage msg){
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

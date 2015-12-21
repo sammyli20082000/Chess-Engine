@@ -1,7 +1,9 @@
+package Executable;
+
 import java.util.ArrayList;
 import java.util.Map;
 
-import BoardModel.Point;
+import Executable.BoardModel.Point;
 
 public class Node {
 	State state;

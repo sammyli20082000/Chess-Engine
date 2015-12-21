@@ -1,13 +1,13 @@
-package BoardModel;
+package Executable.BoardModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import PieceModel.Cannon;
-import PieceModel.Elephant;
-import PieceModel.Horse;
-import PieceModel.Piece;
+import Executable.PieceModel.Cannon;
+import Executable.PieceModel.Elephant;
+import Executable.PieceModel.Horse;
+import Executable.PieceModel.Piece;
 
 public class Board {
 	ArrayList<Point> points;

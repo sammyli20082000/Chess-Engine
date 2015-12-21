@@ -1,12 +1,15 @@
-package PieceModel;
+package Executable.PieceModel;
 
+import Executable.BoardModel.Edge.Direction;
 import java.util.ArrayList;
 
-import BoardModel.Edge.Direction;
-import BoardModel.Point;
+import Executable.BoardModel.Board;
+import Executable.BoardModel.Edge;
+import Executable.BoardModel.Point;
 
-public class Cannon extends Piece {
-	public Cannon(String s, String l, double w, double h, String n) {
+public class Chariot extends Piece {
+
+	public Chariot(String s, String l, double w, double h, String n) {
 		super(s, l, w, h, n);
 	}
 
@@ -62,6 +65,7 @@ public class Cannon extends Piece {
 				continue;
 			}
 		}
+
 
 		return moves;
 	}

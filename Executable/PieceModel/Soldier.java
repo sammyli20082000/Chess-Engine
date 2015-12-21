@@ -1,9 +1,9 @@
-package PieceModel;
+package Executable.PieceModel;
 
 import java.util.ArrayList;
 
-import BoardModel.Edge.Direction;
-import BoardModel.Point;
+import Executable.BoardModel.Edge.Direction;
+import Executable.BoardModel.Point;
 
 public class Soldier extends Piece {
 	public Soldier(String s, String l, double w, double h, String n) {

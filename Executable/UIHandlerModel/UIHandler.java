@@ -1,4 +1,4 @@
-package UIHandlerModel;
+package Executable.UIHandlerModel;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import BoardModel.Board;
-import BoardModel.Point;
+import Executable.BoardModel.Board;
+import Executable.BoardModel.Point;
 
 public class UIHandler {
     //------------------------------callback message code------------------------------

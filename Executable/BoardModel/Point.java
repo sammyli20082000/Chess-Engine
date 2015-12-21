@@ -1,8 +1,8 @@
-package BoardModel;
+package Executable.BoardModel;
 
 import java.util.*;
 
-import PieceModel.Piece;
+import Executable.PieceModel.Piece;
 
 public class Point {
 	private static int idCounter = 0;
