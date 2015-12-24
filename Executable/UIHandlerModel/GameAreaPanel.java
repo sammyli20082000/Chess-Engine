@@ -48,8 +48,8 @@ public class GameAreaPanel extends JPanel {
             e.printStackTrace();
             boardImageTangent = 1.0 * DataAndSetting.BoardData.preferredPixelHeight / DataAndSetting.BoardData.preferredPixelWidth;
             calcGamePanelPreferredSize(
-                    DataAndSetting.BoardData.preferredPixelWidth,
-                    DataAndSetting.BoardData.preferredPixelHeight
+                    DataAndSetting.BoardData.preferredPixelHeight,
+                    DataAndSetting.BoardData.preferredPixelWidth
             );
         }
     }
@@ -141,14 +141,14 @@ public class GameAreaPanel extends JPanel {
         if (ui.getIsShowDebug()) printDebugLog(g);
     }
 
-    private void drawAllPiecePlacingPointsForDebug(Graphics g){
-        if (board!=null)
-        drawPiecePlacingPoints(g, board.getPoints(), new Color(0f ,0f ,1f, 0.5f), true);
+    private void drawAllPiecePlacingPointsForDebug(Graphics g) {
+        if (board != null)
+            drawPiecePlacingPoints(g, board.getPoints(), new Color(0f, 0f, 1f, 0.5f), true);
     }
 
-    private void drawPieceNextMoveCandidatePoints(Graphics g){
+    private void drawPieceNextMoveCandidatePoints(Graphics g) {
         ArrayList<Point> points = ui.getCallback().getPieceNextMovePointCandidateList();
-        if (points==null) return;
+        if (points == null) return;
         drawPiecePlacingPoints(g, points, new Color(1f, 0f, 0f, 0.5f), false);
     }
 
@@ -227,9 +227,9 @@ public class GameAreaPanel extends JPanel {
         }
     }
 
-    private void drawPiecePlacingPoints(Graphics g, ArrayList<Point>points, Color color, boolean showID) {
+    private void drawPiecePlacingPoints(Graphics g, ArrayList<Point> points, Color color, boolean showID) {
         for (Point p : points) {
-            if(p != null) {
+            if (p != null) {
                 int
                         w = (int) (p.getWidth() * boardPaintWidth),
                         h = (int) (p.getHeight() * boardPaintHeight),
@@ -246,23 +246,22 @@ public class GameAreaPanel extends JPanel {
 
     public void notifyWindowResized() {
         gamePanelTangent = 1.0 * this.getHeight() / this.getWidth();
-        if (boardImage != null && gamePanelTangent != boardImageTangent) {
-            if (gamePanelTangent > boardImageTangent) {
-                boardBaseXShift = 0;
-                boardPaintWidth = this.getWidth();
-                boardPaintHeight = (int) (1.0 * boardPaintWidth * boardImageTangent);
-                boardBaseYShift = (int)(1.0 * (this.getHeight() - boardPaintHeight) / 2);
-            } else {
-                boardBaseYShift = 0;
-                boardPaintHeight = this.getHeight();
-                boardPaintWidth = (int) (1.0 * boardPaintHeight / boardImageTangent);
-                boardBaseXShift = (int) (1.0 * (this.getWidth() - boardPaintWidth) / 2);
-            }
-        } else {
+
+        if (gamePanelTangent > boardImageTangent) {
+            boardBaseXShift = 0;
+            boardPaintWidth = this.getWidth();
+            boardPaintHeight = (int) (1.0 * boardPaintWidth * boardImageTangent);
+            boardBaseYShift = (int) (1.0 * (this.getHeight() - boardPaintHeight) / 2);
+        } else if (gamePanelTangent == boardImageTangent) {
             boardBaseXShift = 0;
             boardBaseYShift = 0;
             boardPaintHeight = this.getHeight();
             boardPaintWidth = this.getWidth();
+        } else {
+            boardBaseYShift = 0;
+            boardPaintHeight = this.getHeight();
+            boardPaintWidth = (int) (1.0 * boardPaintHeight / boardImageTangent);
+            boardBaseXShift = (int) (1.0 * (this.getWidth() - boardPaintWidth) / 2);
         }
     }
 
@@ -289,7 +288,7 @@ public class GameAreaPanel extends JPanel {
     }
 
     private Point checkThatPointOrPieceClicked() {
-        if (board == null ) return null;
+        if (board == null) return null;
         for (Point p : board.getPoints()) {
             Piece pieceOnPoint = p.getPiece();
 
@@ -321,7 +320,7 @@ public class GameAreaPanel extends JPanel {
         ui.refreshWindow();
     }
 
-    public boolean isBoardImageNotSet(){
+    public boolean isBoardImageNotSet() {
         return boardImage == null;
     }
 }

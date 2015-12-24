@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Executable.BoardModel.Edge.Direction;
 import Executable.BoardModel.Point;
+import Executable.DataAndSetting;
 
 public class Soldier extends Piece {
 	public Soldier(String s, String l, double w, double h, String n) {
@@ -13,7 +14,7 @@ public class Soldier extends Piece {
 	@Override
 	protected ArrayList<Point> moveIndependently(Point p) {
 		ArrayList<Point> moves = new ArrayList<>();
-		if (this.getSide().equals(Piece.PlayerSide.RED)) {
+		if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.RED)) {
 			if (p.getId() % 10 <= 4) {
 				if (p.getId() % 10 != 0)
 					moves.add(p.getNextPointByDirection(Direction.NORTH));
@@ -22,7 +23,7 @@ public class Soldier extends Piece {
 			} else {
 				moves.add(p.getNextPointByDirection(Direction.NORTH));
 			}
-		} else if (this.getSide().equals(Piece.PlayerSide.BLACK)) {
+		} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.BLACK)) {
 			if (p.getId() % 10 >= 5) {
 				if (p.getId() % 10 != 9)
 					moves.add(p.getNextPointByDirection(Direction.SOUTH));

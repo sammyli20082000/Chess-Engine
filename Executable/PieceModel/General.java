@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Executable.BoardModel.Point;
 import Executable.BoardModel.Edge.Direction;
+import Executable.DataAndSetting;
 
 public class General extends Piece {
 
@@ -43,7 +44,7 @@ public class General extends Piece {
 				continue;
 			}
 
-			if (this.getSide().equals(Piece.PlayerSide.RED)) {
+			if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.RED)) {
 				if (!(moves.get(i).getId() / 10 >= 3 && moves.get(i).getId() / 10 <= 5)) {
 					moves.remove(i);
 					i--;
@@ -54,7 +55,7 @@ public class General extends Piece {
 					i--;
 					continue;
 				}
-			} else if (this.getSide().equals(Piece.PlayerSide.BLACK)) {
+			} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.BLACK)) {
 				if (!(moves.get(i).getId() / 10 >= 3 && moves.get(i).getId() / 10 <= 5)) {
 					moves.remove(i);
 					i--;

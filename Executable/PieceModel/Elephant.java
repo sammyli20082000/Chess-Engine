@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Executable.BoardModel.Edge.Direction;
 import Executable.BoardModel.Point;
+import Executable.DataAndSetting;
 
 public class Elephant extends Piece {
 
@@ -47,13 +48,13 @@ public class Elephant extends Piece {
 				continue;
 			}
 			
-			if (this.getSide().equals(Piece.PlayerSide.RED)) {
+			if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.RED)) {
 				if (!(moves.get(i).getId() % 10 >= 5)) {
 					moves.remove(i);
 					i--;
 					continue;
 				}
-			} else if (this.getSide().equals(Piece.PlayerSide.BLACK)) {
+			} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.BLACK)) {
 				if (!(moves.get(i).getId() % 10 <= 4)) {
 					moves.remove(i);
 					i--;

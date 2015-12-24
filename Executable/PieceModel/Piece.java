@@ -11,14 +11,10 @@ import Executable.BoardModel.Board;
 import Executable.BoardModel.Point;
 
 public abstract class Piece {
-    public static class PlayerSide{
-        public static String RED="Red",
-        BLACK="Black";
-    }
     private static int idCounter=0;
     private int id;
     private String name;
-    String side;
+    private String side;
     BufferedImage pieceImage;
     private String imageLink;
     //private Point point;
@@ -36,6 +32,7 @@ public abstract class Piece {
             pieceImage = ImageIO.read(new File(imageLink));
         }catch (Exception e){
             e.printStackTrace();
+            pieceImage = null;
         }
     }
 
