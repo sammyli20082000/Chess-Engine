@@ -67,8 +67,10 @@ public class Game {
                 diffX = (0.9382566585956417 - baseX) / (column - 1), diffY = (0.96 - baseY) / (row - 1), radius = 0.2,
                 boardTangent = ui.getBoardTangent();
 
-        for (int i = 0; i < DataAndSetting.PointEdgeData.boardPointsArray.length; i++)
-            board.addPoint(DataAndSetting.PointEdgeData.boardPointsArray[i]);
+        for (int i = 0; i < DataAndSetting.PointEdgeData.boardPointsArray.length; i++){
+            DataAndSetting.PointEdgeData.PointDataPackage pack = DataAndSetting.PointEdgeData.boardPointsArray[i];
+            board.addPoint(pack.xCoordinate, pack.yCoordinate, pack.width, pack.height);
+        }
         /*for (int i = 0; i < column; i++) {
             for (int j = 0; j < row; j++) {
                 board.addPoint(baseX + diffX * i, baseY + diffY * j, radius * 2 * diffX,
