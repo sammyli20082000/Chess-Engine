@@ -11,63 +11,144 @@ public class Cannon extends Piece {
 	}
 
 	@Override
-	protected ArrayList<Point> moveIndependently(Point p) {
-		ArrayList<Point> moves = new ArrayList<>();
-		Point point = p;
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		ArrayList<Point> validMoves = new ArrayList<>();
+		int counter = 0;
 
-		for (;;) {
-			try {
-				point = point.getNextPointByDirection(Direction.NORTH);
-				moves.add(point);
-			} catch (Exception e) {
-				point = p;
-				break;
+		ArrayList<Point> northValidMoves = p.getPointsAlongDirection(Direction.NORTH);
+		ArrayList<Point> eastValidMoves = p.getPointsAlongDirection(Direction.EAST);
+		ArrayList<Point> southValidMoves = p.getPointsAlongDirection(Direction.SOUTH);
+		ArrayList<Point> westValidMoves = p.getPointsAlongDirection(Direction.WEST);
+
+		for (int i = 0; i < northValidMoves.size(); i++) {
+			if (counter == 0 && northValidMoves.get(i).getPiece() != null) {
+				counter++;
+				northValidMoves.remove(i);
+				i--;
+				continue;
+			}
+			if (counter == 1) {
+				if (northValidMoves.get(i).getPiece() == null) {
+					northValidMoves.remove(i);
+					i--;
+					continue;
+				} else {
+					counter++;
+					continue;
+				}
+			}
+			if (counter > 1) {
+				northValidMoves.remove(i);
+				i--;
+				continue;
+			}
+		}
+		counter = 0;
+		
+		for (int i = 0; i < southValidMoves.size(); i++) {
+			if (counter == 0 && southValidMoves.get(i).getPiece() != null) {
+				counter++;
+				southValidMoves.remove(i);
+				i--;
+				continue;
+			}
+			if (counter == 1) {
+				if (southValidMoves.get(i).getPiece() == null) {
+					southValidMoves.remove(i);
+					i--;
+					continue;
+				} else {
+					counter++;
+					continue;
+				}
+			}
+			if (counter > 1) {
+				southValidMoves.remove(i);
+				i--;
+				continue;
+			}
+		}
+		counter = 0;
+		
+		for (int i = 0; i < eastValidMoves.size(); i++) {
+			if (counter == 0 && eastValidMoves.get(i).getPiece() != null) {
+				counter++;
+				eastValidMoves.remove(i);
+				i--;
+				continue;
+			}
+			if (counter == 1) {
+				if (eastValidMoves.get(i).getPiece() == null) {
+					eastValidMoves.remove(i);
+					i--;
+					continue;
+				} else {
+					counter++;
+					continue;
+				}
+			}
+			if (counter > 1) {
+				eastValidMoves.remove(i);
+				i--;
+				continue;
+			}
+		}
+		counter = 0;
+		
+		for (int i = 0; i < westValidMoves.size(); i++) {
+			if (counter == 0 && westValidMoves.get(i).getPiece() != null) {
+				counter++;
+				westValidMoves.remove(i);
+				i--;
+				continue;
+			}
+			if (counter == 1) {
+				if (westValidMoves.get(i).getPiece() == null) {
+					westValidMoves.remove(i);
+					i--;
+					continue;
+				} else {
+					counter++;
+					continue;
+				}
+			}
+			if (counter > 1) {
+				westValidMoves.remove(i);
+				i--;
+				continue;
+			}
+		}
+		counter = 0;
+
+		for (int i = 0; i < northValidMoves.size(); i++) {
+			validMoves.add(northValidMoves.get(i));
+		}
+		for (int i = 0; i < eastValidMoves.size(); i++) {
+			validMoves.add(eastValidMoves.get(i));
+		}
+		for (int i = 0; i < southValidMoves.size(); i++) {
+			validMoves.add(southValidMoves.get(i));
+		}
+		for (int i = 0; i < westValidMoves.size(); i++) {
+			validMoves.add(westValidMoves.get(i));
+		}
+		
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i).getPiece() != null && validMoves.get(i).getPiece().getSide() == this.getSide()) {
+				validMoves.remove(i);
+				i--;
+				continue;
 			}
 		}
 		
-		for (;;) {
-			try {
-				point = point.getNextPointByDirection(Direction.EAST);
-				moves.add(point);
-			} catch (Exception e) {
-				point = p;
-				break;
-			}
-		}
-		
-		for (;;) {
-			try {
-				point = point.getNextPointByDirection(Direction.SOUTH);
-				moves.add(point);
-			} catch (Exception e) {
-				point = p;
-				break;
-			}
-		}
-		
-		for (;;) {
-			try {
-				point = point.getNextPointByDirection(Direction.WEST);
-				moves.add(point);
-			} catch (Exception e) {
-				point = p;
-				break;
-			}
-		}
-		
-		for (int i = 0; i < moves.size(); i++) {
-			if (moves.get(i) == null) {
-				moves.remove(i);
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i) == null) {
+				validMoves.remove(i);
 				i--;
 				continue;
 			}
 		}
 
-		return moves;
-	}
-
-	@Override
-	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
-		return moveIndependently(p);
+		return validMoves;
 	}
 }

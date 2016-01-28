@@ -13,67 +13,62 @@ public class General extends Piece {
 	}
 
 	@Override
-	protected ArrayList<Point> moveIndependently(Point p) {
-		ArrayList<Point> moves = new ArrayList<>();
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		ArrayList<Point> validMoves = new ArrayList<>();
 
 		try {
-			moves.add(p.getNextPointByDirection(Direction.EAST));
+			validMoves.add(p.getNextPointByDirection(Direction.EAST));
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.SOUTH));
+			validMoves.add(p.getNextPointByDirection(Direction.SOUTH));
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.WEST));
+			validMoves.add(p.getNextPointByDirection(Direction.WEST));
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.NORTH));
+			validMoves.add(p.getNextPointByDirection(Direction.NORTH));
 		} catch (Exception e) {
 
 		}
 
-		for (int i = 0; i < moves.size(); i++) {
-			if (moves.get(i) == null) {
-				moves.remove(i);
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i) == null) {
+				validMoves.remove(i);
 				i--;
 				continue;
 			}
 
-			if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.RED)) {
-				if (!(moves.get(i).getId() / 10 >= 3 && moves.get(i).getId() / 10 <= 5)) {
-					moves.remove(i);
+			if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.player)) {
+				if (!(validMoves.get(i).getId() / 10 >= 3 && validMoves.get(i).getId() / 10 <= 5)) {
+					validMoves.remove(i);
 					i--;
 					continue;
 				}
-				if (!(moves.get(i).getId() % 10 >= 7)) {
-					moves.remove(i);
+				if (!(validMoves.get(i).getId() % 10 >= 7)) {
+					validMoves.remove(i);
 					i--;
 					continue;
 				}
-			} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.BLACK)) {
-				if (!(moves.get(i).getId() / 10 >= 3 && moves.get(i).getId() / 10 <= 5)) {
-					moves.remove(i);
+			} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.computer)) {
+				if (!(validMoves.get(i).getId() / 10 >= 3 && validMoves.get(i).getId() / 10 <= 5)) {
+					validMoves.remove(i);
 					i--;
 					continue;
 				}
-				if (!(moves.get(i).getId() % 10 <= 2)) {
-					moves.remove(i);
+				if (!(validMoves.get(i).getId() % 10 <= 2)) {
+					validMoves.remove(i);
 					i--;
 					continue;
 				}
 			}
 		}
 
-		return moves;
-	}
-
-	@Override
-	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
-		return moveIndependently(p);
+		return validMoves;
 	}
 }

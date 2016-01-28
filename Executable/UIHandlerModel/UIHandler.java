@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.UIManager;
 
 import Executable.BoardModel.Board;
@@ -186,4 +187,16 @@ public class UIHandler {
         return gameAreaPanel.isBoardImageNotSet();
     }
 
+    public void enableStartGameButton() {
+    	infoPanelHandler.enableStartGameButton();
+    	infoPanelHandler.enableStartSideList();
+    }
+    
+    public void restoreMovementHistoryList() {
+    	infoPanelHandler.restoreMovementHistoryList();
+    }
+    
+    public JList getMovementHistoryList() {
+    	return infoPanelHandler.getMovementHistoryList();
+    }
 }

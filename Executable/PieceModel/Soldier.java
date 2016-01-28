@@ -12,40 +12,35 @@ public class Soldier extends Piece {
 	}
 
 	@Override
-	protected ArrayList<Point> moveIndependently(Point p) {
-		ArrayList<Point> moves = new ArrayList<>();
-		if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.RED)) {
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		ArrayList<Point> validMoves = new ArrayList<>();
+		if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.player)) {
 			if (p.getId() % 10 <= 4) {
 				if (p.getId() % 10 != 0)
-					moves.add(p.getNextPointByDirection(Direction.NORTH));
-				moves.add(p.getNextPointByDirection(Direction.EAST));
-				moves.add(p.getNextPointByDirection(Direction.WEST));
+					validMoves.add(p.getNextPointByDirection(Direction.NORTH));
+				validMoves.add(p.getNextPointByDirection(Direction.EAST));
+				validMoves.add(p.getNextPointByDirection(Direction.WEST));
 			} else {
-				moves.add(p.getNextPointByDirection(Direction.NORTH));
+				validMoves.add(p.getNextPointByDirection(Direction.NORTH));
 			}
-		} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.BLACK)) {
+		} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.computer)) {
 			if (p.getId() % 10 >= 5) {
 				if (p.getId() % 10 != 9)
-					moves.add(p.getNextPointByDirection(Direction.SOUTH));
-				moves.add(p.getNextPointByDirection(Direction.EAST));
-				moves.add(p.getNextPointByDirection(Direction.WEST));
+					validMoves.add(p.getNextPointByDirection(Direction.SOUTH));
+				validMoves.add(p.getNextPointByDirection(Direction.EAST));
+				validMoves.add(p.getNextPointByDirection(Direction.WEST));
 			} else {
-				moves.add(p.getNextPointByDirection(Direction.SOUTH));
+				validMoves.add(p.getNextPointByDirection(Direction.SOUTH));
 			}
 		}
 		
-		for(int i = 0; i < moves.size(); i++){
-			if(moves.get(i) == null){
-				moves.remove(i);
+		for(int i = 0; i < validMoves.size(); i++){
+			if(validMoves.get(i) == null){
+				validMoves.remove(i);
 				i--;
 			}
 		}
 		
-		return moves;
-	}
-
-	@Override
-	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
-		return moveIndependently(p);
+		return validMoves;
 	}
 }

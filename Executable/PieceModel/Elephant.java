@@ -13,61 +13,81 @@ public class Elephant extends Piece {
 	}
 
 	@Override
-	protected ArrayList<Point> moveIndependently(Point p) {
-		ArrayList<Point> moves = new ArrayList<>();
-		
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		ArrayList<Point> validMoves = new ArrayList<>();
 		try {
-			moves.add(p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.NORTH)
-					.getNextPointByDirection(Direction.EAST).getNextPointByDirection(Direction.EAST));
+			ArrayList<Direction> dirs = new ArrayList<>();
+			dirs.add(Direction.NORTH);
+			dirs.add(Direction.EAST);
+
+			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+				dirs.add(Direction.NORTH);
+				dirs.add(Direction.EAST);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.NORTH)
-					.getNextPointByDirection(Direction.WEST).getNextPointByDirection(Direction.WEST));
+			ArrayList<Direction> dirs = new ArrayList<>();
+			dirs.add(Direction.SOUTH);
+			dirs.add(Direction.EAST);
+
+			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+				dirs.add(Direction.SOUTH);
+				dirs.add(Direction.EAST);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.SOUTH)
-					.getNextPointByDirection(Direction.EAST).getNextPointByDirection(Direction.EAST));
+			ArrayList<Direction> dirs = new ArrayList<>();
+			dirs.add(Direction.NORTH);
+			dirs.add(Direction.WEST);
+
+			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+				dirs.add(Direction.NORTH);
+				dirs.add(Direction.WEST);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.SOUTH)
-					.getNextPointByDirection(Direction.WEST).getNextPointByDirection(Direction.WEST));
+			ArrayList<Direction> dirs = new ArrayList<>();
+			dirs.add(Direction.SOUTH);
+			dirs.add(Direction.WEST);
+
+			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+				dirs.add(Direction.SOUTH);
+				dirs.add(Direction.WEST);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 
-		for (int i = 0; i < moves.size(); i++) {
-			if (moves.get(i) == null) {
-				moves.remove(i);
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i).getPiece() != null && validMoves.get(i).getPiece().getSide() == this.getSide()) {
+				validMoves.remove(i);
 				i--;
 				continue;
 			}
-			
-			if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.RED)) {
-				if (!(moves.get(i).getId() % 10 >= 5)) {
-					moves.remove(i);
-					i--;
-					continue;
-				}
-			} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.BLACK)) {
-				if (!(moves.get(i).getId() % 10 <= 4)) {
-					moves.remove(i);
-					i--;
-					continue;
-				}
+		}
+
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i) == null) {
+				validMoves.remove(i);
+				i--;
+				continue;
 			}
 		}
 
-		return moves;
-	}
-
-	@Override
-	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
-		return moveIndependently(p);
+		return validMoves;
 	}
 }

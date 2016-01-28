@@ -12,71 +12,105 @@ public class Horse extends Piece {
 	}
 
 	@Override
-	protected ArrayList<Point> moveIndependently(Point p) {
-		ArrayList<Point> moves = new ArrayList<>();
-
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		ArrayList<Point> validMoves = new ArrayList<>();
 		try {
-			moves.add(p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.NORTH)
-					.getNextPointByDirection(Direction.EAST));
+			if (p.getNextPointByDirection(Direction.NORTH).getPiece() == null) {
+				ArrayList<Direction> dirs = new ArrayList<>();
+
+				dirs.add(Direction.NORTH);
+				dirs.add(Direction.NORTH);
+				dirs.add(Direction.EAST);
+				
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+
+				dirs.clear();
+				dirs.add(Direction.NORTH);
+				dirs.add(Direction.NORTH);
+				dirs.add(Direction.WEST);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.NORTH).getNextPointByDirection(Direction.NORTH)
-					.getNextPointByDirection(Direction.WEST));
+			if (p.getNextPointByDirection(Direction.EAST).getPiece() == null) {
+				ArrayList<Direction> dirs = new ArrayList<>();
+
+				dirs.add(Direction.EAST);
+				dirs.add(Direction.EAST);
+				dirs.add(Direction.NORTH);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+
+				dirs.clear();
+				dirs.add(Direction.EAST);
+				dirs.add(Direction.EAST);
+				dirs.add(Direction.SOUTH);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.SOUTH)
-					.getNextPointByDirection(Direction.EAST));
+			if (p.getNextPointByDirection(Direction.SOUTH).getPiece() == null) {
+				ArrayList<Direction> dirs = new ArrayList<>();
+
+				dirs.add(Direction.SOUTH);
+				dirs.add(Direction.SOUTH);
+				dirs.add(Direction.EAST);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+
+				dirs.clear();
+				dirs.add(Direction.SOUTH);
+				dirs.add(Direction.SOUTH);
+				dirs.add(Direction.WEST);
+
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.SOUTH).getNextPointByDirection(Direction.SOUTH)
-					.getNextPointByDirection(Direction.WEST));
-		} catch (Exception e) {
+			if (p.getNextPointByDirection(Direction.WEST).getPiece() == null) {
+				ArrayList<Direction> dirs = new ArrayList<>();
 
-		}
-		try {
-			moves.add(p.getNextPointByDirection(Direction.EAST).getNextPointByDirection(Direction.EAST)
-					.getNextPointByDirection(Direction.NORTH));
-		} catch (Exception e) {
+				dirs.add(Direction.WEST);
+				dirs.add(Direction.WEST);
+				dirs.add(Direction.SOUTH);
 
-		}
-		try {
-			moves.add(p.getNextPointByDirection(Direction.EAST).getNextPointByDirection(Direction.EAST)
-					.getNextPointByDirection(Direction.SOUTH));
-		} catch (Exception e) {
+				validMoves.add(p.getNextPointByDirectionList(dirs));
 
-		}
-		try {
-			moves.add(p.getNextPointByDirection(Direction.WEST).getNextPointByDirection(Direction.WEST)
-					.getNextPointByDirection(Direction.NORTH));
-		} catch (Exception e) {
+				dirs.clear();
+				dirs.add(Direction.WEST);
+				dirs.add(Direction.WEST);
+				dirs.add(Direction.NORTH);
 
-		}
-		try {
-			moves.add(p.getNextPointByDirection(Direction.WEST).getNextPointByDirection(Direction.WEST)
-					.getNextPointByDirection(Direction.SOUTH));
+				validMoves.add(p.getNextPointByDirectionList(dirs));
+			}
 		} catch (Exception e) {
 
 		}
 		
-		for (int i = 0; i < moves.size(); i++) {
-			if (moves.get(i) == null) {
-				moves.remove(i);
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i).getPiece() != null && validMoves.get(i).getPiece().getSide() == this.getSide()) {
+				validMoves.remove(i);
 				i--;
 				continue;
 			}
 		}
 
-		return moves;
-	}
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i) == null) {
+				validMoves.remove(i);
+				i--;
+				continue;
+			}
+		}
 
-	@Override
-	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
-		return moveIndependently(p);
+		return validMoves;
 	}
 }

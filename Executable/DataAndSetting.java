@@ -1,7 +1,6 @@
 package Executable;
 
-import Executable.BoardModel.Edge;
-import Executable.BoardModel.Point;
+import Executable.BoardModel.*;
 import Executable.PieceModel.*;
 
 /**
@@ -40,76 +39,76 @@ public class DataAndSetting {
 
     public static class PieceData {
         public static class PlayerSide {
-            public static String RED = "red";
-            public static String BLACK = "black";
+            public static String player = "red";
+            public static String computer = "black";
         }
 
         public static Piece makeStandardPiece(String pieceType, String playerSide) {
-            if (pieceType.equals("Soldier") && playerSide.equals(PlayerSide.RED))
+            if (pieceType.equals("Soldier") && playerSide.equals(PlayerSide.player))
                 return new Soldier(playerSide, localDir + playerSide + "_soldier.png", 0.08825665859564165, 0.07890495967160015, "\u5175");
-            else if (pieceType.equals("Soldier") && playerSide.equals(PlayerSide.BLACK))
+            else if (pieceType.equals("Soldier") && playerSide.equals(PlayerSide.computer))
                 return new Soldier(playerSide, localDir + playerSide + "_soldier.png", 0.08825665859564165, 0.07890495967160015, "\u5352");
-            else if (pieceType.equals("Advisor") && playerSide.equals(PlayerSide.RED))
+            else if (pieceType.equals("Advisor") && playerSide.equals(PlayerSide.player))
                 return new Advisor(playerSide, localDir + playerSide + "_advisor.png", 0.08825665859564165, 0.07890495967160015, "\u4ed5");
-            else if (pieceType.equals("Advisor") && playerSide.equals(PlayerSide.BLACK))
+            else if (pieceType.equals("Advisor") && playerSide.equals(PlayerSide.computer))
                 return new Advisor(playerSide, localDir + playerSide + "_advisor.png", 0.08825665859564165, 0.07890495967160015, "\u58eb");
-            else if (pieceType.equals("Cannon") && playerSide.equals(PlayerSide.RED))
+            else if (pieceType.equals("Cannon") && playerSide.equals(PlayerSide.player))
                 return new Cannon(playerSide, localDir + playerSide + "_cannon.png", 0.08825665859564165, 0.07890495967160015, "\u70ae");
-            else if (pieceType.equals("Cannon") && playerSide.equals(PlayerSide.BLACK))
+            else if (pieceType.equals("Cannon") && playerSide.equals(PlayerSide.computer))
                 return new Cannon(playerSide, localDir + playerSide + "_cannon.png", 0.08825665859564165, 0.07890495967160015, "\u7832");
-            else if (pieceType.equals("Chariot") && playerSide.equals(PlayerSide.RED))
+            else if (pieceType.equals("Chariot") && playerSide.equals(PlayerSide.player))
                 return new Chariot(playerSide, localDir + playerSide + "_chariot.png", 0.08825665859564165, 0.07890495967160015, "\u4fe5");
-            else if (pieceType.equals("Chariot") && playerSide.equals(PlayerSide.BLACK))
+            else if (pieceType.equals("Chariot") && playerSide.equals(PlayerSide.computer))
                 return new Chariot(playerSide, localDir + playerSide + "_chariot.png", 0.08825665859564165, 0.07890495967160015, "\u8eca");
-            else if (pieceType.equals("Elephant") && playerSide.equals(PlayerSide.RED))
+            else if (pieceType.equals("Elephant") && playerSide.equals(PlayerSide.player))
                 return new Elephant(playerSide, localDir + playerSide + "_elephant.png", 0.08825665859564165, 0.07890495967160015, "\u76f8");
-            else if (pieceType.equals("Elephant") && playerSide.equals(PlayerSide.BLACK))
+            else if (pieceType.equals("Elephant") && playerSide.equals(PlayerSide.computer))
                 return new Elephant(playerSide, localDir + playerSide + "_elephant.png", 0.08825665859564165, 0.07890495967160015, "\u8c61");
-            else if (pieceType.equals("General") && playerSide.equals(PlayerSide.RED))
+            else if (pieceType.equals("General") && playerSide.equals(PlayerSide.player))
                 return new General(playerSide, localDir + playerSide + "_general.png", 0.08825665859564165, 0.07890495967160015, "\u5e25");
-            else if (pieceType.equals("General") && playerSide.equals(PlayerSide.BLACK))
+            else if (pieceType.equals("General") && playerSide.equals(PlayerSide.computer))
                 return new General(playerSide, localDir + playerSide + "_general.png", 0.08825665859564165, 0.07890495967160015, "\u5c07");
-            else if (pieceType.equals("Horse") && playerSide.equals(PlayerSide.RED))
+            else if (pieceType.equals("Horse") && playerSide.equals(PlayerSide.player))
                 return new Horse(playerSide, localDir + playerSide + "_horse.png", 0.08825665859564165, 0.07890495967160015, "\u508c");
-            else if (pieceType.equals("Horse") && playerSide.equals(PlayerSide.BLACK))
+            else if (pieceType.equals("Horse") && playerSide.equals(PlayerSide.computer))
                 return new Horse(playerSide, localDir + playerSide + "_horse.png", 0.08825665859564165, 0.07890495967160015, "\u99ac");
             else
                 return null;
         }
 
         public static PieceDataPackage[] initialPiecePlacingData = new PieceDataPackage[]{
-                new PieceDataPackage(0, "Chariot", PlayerSide.BLACK),
-                new PieceDataPackage(3, "Soldier", PlayerSide.BLACK),
-                new PieceDataPackage(6, "Soldier", PlayerSide.RED),
-                new PieceDataPackage(9, "Chariot", PlayerSide.RED),
-                new PieceDataPackage(10, "Horse", PlayerSide.BLACK),
-                new PieceDataPackage(12, "Cannon", PlayerSide.BLACK),
-                new PieceDataPackage(17, "Cannon", PlayerSide.RED),
-                new PieceDataPackage(19, "Horse", PlayerSide.RED),
-                new PieceDataPackage(20, "Elephant", PlayerSide.BLACK),
-                new PieceDataPackage(23, "Soldier", PlayerSide.BLACK),
-                new PieceDataPackage(26, "Soldier", PlayerSide.RED),
-                new PieceDataPackage(29, "Elephant", PlayerSide.RED),
-                new PieceDataPackage(30, "Advisor", PlayerSide.BLACK),
-                new PieceDataPackage(39, "Advisor", PlayerSide.RED),
-                new PieceDataPackage(40, "General", PlayerSide.BLACK),
-                new PieceDataPackage(43, "Soldier", PlayerSide.BLACK),
-                new PieceDataPackage(46, "Soldier", PlayerSide.RED),
-                new PieceDataPackage(49, "General", PlayerSide.RED),
-                new PieceDataPackage(50, "Advisor", PlayerSide.BLACK),
-                new PieceDataPackage(59, "Advisor", PlayerSide.RED),
-                new PieceDataPackage(60, "Elephant", PlayerSide.BLACK),
-                new PieceDataPackage(63, "Soldier", PlayerSide.BLACK),
-                new PieceDataPackage(66, "Soldier", PlayerSide.RED),
-                new PieceDataPackage(69, "Elephant", PlayerSide.RED),
-                new PieceDataPackage(70, "Horse", PlayerSide.BLACK),
-                new PieceDataPackage(72, "Cannon", PlayerSide.BLACK),
-                new PieceDataPackage(77, "Cannon", PlayerSide.RED),
-                new PieceDataPackage(79, "Horse", PlayerSide.RED),
-                new PieceDataPackage(80, "Chariot", PlayerSide.BLACK),
-                new PieceDataPackage(83, "Soldier", PlayerSide.BLACK),
-                new PieceDataPackage(86, "Soldier", PlayerSide.RED),
-                new PieceDataPackage(89, "Chariot", PlayerSide.RED)
+                new PieceDataPackage(0, "Chariot", PlayerSide.computer),
+                new PieceDataPackage(3, "Soldier", PlayerSide.computer),
+                new PieceDataPackage(6, "Soldier", PlayerSide.player),
+                new PieceDataPackage(9, "Chariot", PlayerSide.player),
+                new PieceDataPackage(10, "Horse", PlayerSide.computer),
+                new PieceDataPackage(12, "Cannon", PlayerSide.computer),
+                new PieceDataPackage(17, "Cannon", PlayerSide.player),
+                new PieceDataPackage(19, "Horse", PlayerSide.player),
+                new PieceDataPackage(20, "Elephant", PlayerSide.computer),
+                new PieceDataPackage(23, "Soldier", PlayerSide.computer),
+                new PieceDataPackage(26, "Soldier", PlayerSide.player),
+                new PieceDataPackage(29, "Elephant", PlayerSide.player),
+                new PieceDataPackage(30, "Advisor", PlayerSide.computer),
+                new PieceDataPackage(39, "Advisor", PlayerSide.player),
+                new PieceDataPackage(40, "General", PlayerSide.computer),
+                new PieceDataPackage(43, "Soldier", PlayerSide.computer),
+                new PieceDataPackage(46, "Soldier", PlayerSide.player),
+                new PieceDataPackage(49, "General", PlayerSide.player),
+                new PieceDataPackage(50, "Advisor", PlayerSide.computer),
+                new PieceDataPackage(59, "Advisor", PlayerSide.player),
+                new PieceDataPackage(60, "Elephant", PlayerSide.computer),
+                new PieceDataPackage(63, "Soldier", PlayerSide.computer),
+                new PieceDataPackage(66, "Soldier", PlayerSide.player),
+                new PieceDataPackage(69, "Elephant", PlayerSide.player),
+                new PieceDataPackage(70, "Horse", PlayerSide.computer),
+                new PieceDataPackage(72, "Cannon", PlayerSide.computer),
+                new PieceDataPackage(77, "Cannon", PlayerSide.player),
+                new PieceDataPackage(79, "Horse", PlayerSide.player),
+                new PieceDataPackage(80, "Chariot", PlayerSide.computer),
+                new PieceDataPackage(83, "Soldier", PlayerSide.computer),
+                new PieceDataPackage(86, "Soldier", PlayerSide.player),
+                new PieceDataPackage(89, "Chariot", PlayerSide.player)
         };
     }
 

@@ -1,10 +1,11 @@
 package Executable;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
 import Executable.BoardModel.Point;
 
-public class State {
+public class State implements Serializable {
 	Map<Integer, Integer> state;	// pointId, pieceId
 	String side;
 

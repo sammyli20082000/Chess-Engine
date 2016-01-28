@@ -12,44 +12,39 @@ public class Advisor extends Piece {
 	}
 
 	@Override
-	protected ArrayList<Point> moveIndependently(Point p) {
-		ArrayList<Point> moves = new ArrayList<>();
+	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
+		ArrayList<Point> validMoves = new ArrayList<>();
 
 		try {
-			moves.add(p.getNextPointByDirection(Direction.NORTH_EAST));
+			validMoves.add(p.getNextPointByDirection(Direction.NORTH_EAST));
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.NORTH_WEST));
+			validMoves.add(p.getNextPointByDirection(Direction.NORTH_WEST));
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.SOUTH_EAST));
+			validMoves.add(p.getNextPointByDirection(Direction.SOUTH_EAST));
 		} catch (Exception e) {
 
 		}
 		try {
-			moves.add(p.getNextPointByDirection(Direction.SOUTH_WEST));
+			validMoves.add(p.getNextPointByDirection(Direction.SOUTH_WEST));
 		} catch (Exception e) {
 
 		}
 
-		for (int i = 0; i < moves.size(); i++) {
-			if (moves.get(i) == null) {
-				moves.remove(i);
+		for (int i = 0; i < validMoves.size(); i++) {
+			if (validMoves.get(i) == null) {
+				validMoves.remove(i);
 				i--;
 				continue;
 			}
 		}
 
-		return moves;
-	}
+		return validMoves;
 
-	@Override
-	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
-		return moveIndependently(p);
 	}
-
 }

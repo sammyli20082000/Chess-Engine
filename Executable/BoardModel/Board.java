@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import Executable.PieceModel.Cannon;
-import Executable.PieceModel.Elephant;
-import Executable.PieceModel.Horse;
+import Executable.State;
 import Executable.PieceModel.Piece;
 
 public class Board {
@@ -26,6 +24,12 @@ public class Board {
 
 	public Point addPoint(double x, double y, double w, double h) {
 		Point p = new Point(x, y, w, h);
+		addPoint(p);
+		return p;
+	}
+	
+	public Point addPoint(double x, double y, double w, double h, int id) {
+		Point p = new Point(x, y, w, h, id);
 		addPoint(p);
 		return p;
 	}
@@ -56,20 +60,6 @@ public class Board {
 
 	public void updateSelectedPieceMovable(Point p, String currentSide) {
 		selectedPieceMovable = new ArrayList<>(p.getPieceInsideMovable());
-
-//		if (!p.getPiece().getSide().equals(currentSide)) {
-//			return;
-//		}
-//
-//		for (int i = 0; i < p.getPieceInsideMovable().size(); i++) {
-//			try {
-//				if (!p.getPieceInsideMovable().get(i).getPiece().getSide().equals(p.getPiece().getSide())) {
-//					selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
-//				}
-//			} catch (Exception e) {
-//				selectedPieceMovable.add(p.getPieceInsideMovable().get(i));
-//			}
-//		}
 	}
 
 	public ArrayList<Point> getSelectedPieceMovable() {
@@ -88,5 +78,8 @@ public class Board {
 
 	public String getMoveString(Piece piece, Point fromPoint, Point toPoint) {
 		return piece.getName() + " from " + fromPoint.getId() + " to " + toPoint.getId();
+	}
+	
+	public static void filpboard() {
 	}
 }

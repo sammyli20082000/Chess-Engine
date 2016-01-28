@@ -1,13 +1,17 @@
 package Executable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 
 import Executable.BoardModel.Point;
+import Executable.PieceModel.Piece;
 
-public class Node {
+public class Node implements Serializable {
 	State state;
 	String causingMove;
+	int movedFromPointId;
+	int movedToPointId;
 	Node parent;
 	int depth;
 	int pathCost;
@@ -20,8 +24,10 @@ public class Node {
 		pathCost = 0;
 	}
 
-	public Node(Map<Integer, Integer> s, String side, String move, Node parentNode) {
+	public Node(Map<Integer, Integer> s, String side, int fromPointId, int toPointointId, String move, Node parentNode) {
 		state = new State(s, side);
+		movedFromPointId = fromPointId;
+		movedToPointId = toPointointId;
 		causingMove = move;
 		parent = parentNode;
 		depth = parentNode.getDepth() + 1;

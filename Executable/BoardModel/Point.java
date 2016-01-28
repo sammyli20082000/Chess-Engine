@@ -1,10 +1,11 @@
 package Executable.BoardModel;
 
+import java.io.Serializable;
 import java.util.*;
 
 import Executable.PieceModel.Piece;
 
-public class Point {
+public class Point implements Serializable {
 	private static int idCounter = 0;
 	private int id;
 	private Piece piece;
@@ -18,6 +19,16 @@ public class Point {
 		id = idCounter;
 		idCounter++;
 
+		posX = x;
+		posY = y;
+		width = w;
+		height = h;
+		piece = null;
+	}
+	
+	public Point(double x, double y, double w, double h, int id) {
+		this.id = id;
+		
 		posX = x;
 		posY = y;
 		width = w;
@@ -60,10 +71,69 @@ public class Point {
 	public Point getNextPointByDirection(Edge.Direction dir) {
 		return edges.get(dir);
 	}
+	
+	public Point getNextPointByDirectionList(ArrayList<Edge.Direction> dirs) {
+		Point point = this;
+		for (int i = 0; i < dirs.size(); i++) {
+			try {
+				point = point.getNextPointByDirection(dirs.get(i));
+			} catch (Exception e) {
+				return null;
+			}
+		}
+		return point;
+	}
+
+	/**
+	 * Only works on concrete direction.
+	 * 
+	 * @param dir
+	 *            direction
+	 * @return ArrayList of points along the direction
+	 */
+	public ArrayList<Point> getPointsAlongDirection(Edge.Direction dir) {
+		ArrayList<Point> points = new ArrayList<>();
+		Point point = this;
+		for (;;) {
+			try {
+				points.add(point.getNextPointByDirection(dir));
+				point = point.getNextPointByDirection(dir);
+			} catch (Exception e) {
+				break;
+			}
+		}
+
+		for (int i = 0; i < points.size(); i++) {
+			if (points.get(i) == null) {
+				points.remove(i);
+				i--;
+			}
+		}
+		return points;
+	}
+	
+	public ArrayList<Point> getPointsAlongDirectionList(ArrayList<Edge.Direction> dirs) {
+		Point point = this;
+		ArrayList<Point> points = new ArrayList<>();
+		
+		for (;;) {
+			try {
+				for (int i = 0; i < dirs.size(); i++) {
+						point = point.getNextPointByDirection(dirs.get(i));
+				}
+				points.add(point);
+			} catch (Exception e) {
+				return points;
+			}
+		}
+	}
 
 	public ArrayList<Point> getPieceInsideMovable() {
 		pieceInsideMovable = getPiece().moveInvolvingOtherPiece(this);
 		return pieceInsideMovable;
 	}
 	
+	public static void resetIdCounter() {
+		Point.idCounter = 0;
+	}
 }
