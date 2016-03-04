@@ -1,5 +1,7 @@
 package Executable;
 
+import java.io.File;
+
 import Executable.BoardModel.*;
 import Executable.PieceModel.*;
 
@@ -7,7 +9,17 @@ import Executable.PieceModel.*;
  * Created by root on 11/19/15.
  */
 public class DataAndSetting {
-    public static String localDir = "pic/";
+    public static String localDir = getLocalDir();
+
+    public static String getLocalDir() {
+        String s;
+        try {
+            s = new File(DataAndSetting.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent() + "/pic/";
+        } catch (Exception e) {
+            s = new File(DataAndSetting.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent() + "/pic/";
+        }
+        return s;
+    }
 
     public static class BoardData {
         public static String imageLink = localDir + "board.png";
