@@ -17,20 +17,20 @@ public class Soldier extends Piece {
 		if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.player)) {
 			if (p.getId() % 10 <= 4) {
 				if (p.getId() % 10 != 0)
-					validMoves.add(p.getNextPointByDirection(Direction.NORTH));
-				validMoves.add(p.getNextPointByDirection(Direction.EAST));
-				validMoves.add(p.getNextPointByDirection(Direction.WEST));
+					validMoves.add(p.getImmediateNextPointOn(Direction.NORTH));
+				validMoves.add(p.getImmediateNextPointOn(Direction.EAST));
+				validMoves.add(p.getImmediateNextPointOn(Direction.WEST));
 			} else {
-				validMoves.add(p.getNextPointByDirection(Direction.NORTH));
+				validMoves.add(p.getImmediateNextPointOn(Direction.NORTH));
 			}
 		} else if (this.getSide().equals(DataAndSetting.PieceData.PlayerSide.computer)) {
 			if (p.getId() % 10 >= 5) {
 				if (p.getId() % 10 != 9)
-					validMoves.add(p.getNextPointByDirection(Direction.SOUTH));
-				validMoves.add(p.getNextPointByDirection(Direction.EAST));
-				validMoves.add(p.getNextPointByDirection(Direction.WEST));
+					validMoves.add(p.getImmediateNextPointOn(Direction.SOUTH));
+				validMoves.add(p.getImmediateNextPointOn(Direction.EAST));
+				validMoves.add(p.getImmediateNextPointOn(Direction.WEST));
 			} else {
-				validMoves.add(p.getNextPointByDirection(Direction.SOUTH));
+				validMoves.add(p.getImmediateNextPointOn(Direction.SOUTH));
 			}
 		}
 		

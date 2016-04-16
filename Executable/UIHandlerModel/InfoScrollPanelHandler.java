@@ -1,33 +1,12 @@
 package Executable.UIHandlerModel;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
-
-//import javafx.scene.control.RadioButton;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.table.*;
 
 /**
  * Created by him on 30/10/2015.
@@ -37,7 +16,9 @@ public class InfoScrollPanelHandler {
     private JButton showAIButton, showGameTreeButton, undoButton, startGameButton;
     private ButtonGroup startSideGroup;
     private JScrollPane scroll_pane;
-    private JTable playerSideTable, playerRemainingTimeTable, systemInfoTable;
+    private JTable playerSideTable, playerRemainingTimeTable;
+    private JPanel pieceAddPanel;
+    private ButtonGroup pieceButtonGroup;
     private JList movementHistoryList;
     private ArrayList<JRadioButton> startSideRadioButtonList;
     private UIHandler ui;
@@ -76,7 +57,7 @@ public class InfoScrollPanelHandler {
         addTitleLabel("Movement History");
         addMovementHistoryPanel();
         addToBasePanel(undoButton);
-        addTitleLabel("Resources Usage");
+        addTitleLabel("Piece to add");
         addResourcesUsagePanel();
         addToBasePanel(new JLabel(" "));
         addToBasePanel(showAIButton);
@@ -91,13 +72,11 @@ public class InfoScrollPanelHandler {
     private void addResourcesUsagePanel() {
         JPanel jp = createGroupPanel();
 
-        String[] columnNames = new String[]{
-                "Item", "Value"
-        };
-
-        systemInfoTable = new JTable();
-
-        createTableThenAddToJPanel(jp, systemInfoTable, columnNames);
+        pieceAddPanel = new JPanel();
+        pieceButtonGroup = new ButtonGroup();
+        pieceAddPanel.setLayout(new GridLayout(0, 2));
+        
+        jp.add(pieceAddPanel);
         addToBasePanel(jp);
     }
 
@@ -230,8 +209,9 @@ public class InfoScrollPanelHandler {
         updateTableRow(playerRemainingTimeTable, rowTag, value);
     }
 
-    public void updateSystemInfoTableRow(String rowTag, String value) {
-        updateTableRow(systemInfoTable, rowTag, value);
+    public void updateSystemInfoTableRow(JRadioButton jrb) {
+        pieceButtonGroup.add(jrb);
+        pieceAddPanel.add(jrb);
     }
 
     private MouseAdapter getUndoButtonOnClickListener(final JButton thisButton){
@@ -313,6 +293,10 @@ public class InfoScrollPanelHandler {
             jrb.setEnabled(true);
     }
     
+    public void enablePieceAddPanel() {
+    	pieceAddPanel.setEnabled(true);
+    }
+    
     public void restoreMovementHistoryList() {
     	((DefaultListModel)movementHistoryList.getModel()).removeAllElements();
     }
@@ -325,5 +309,9 @@ public class InfoScrollPanelHandler {
     
     public JList getMovementHistoryList() {
     	return movementHistoryList;
+    }
+    
+    public String getSelectedPiece() {
+    	return pieceButtonGroup.getSelection().getActionCommand();
     }
 }

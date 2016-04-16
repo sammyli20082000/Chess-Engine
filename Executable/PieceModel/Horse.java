@@ -15,81 +15,81 @@ public class Horse extends Piece {
 	public ArrayList<Point> moveInvolvingOtherPiece(Point p) {
 		ArrayList<Point> validMoves = new ArrayList<>();
 		try {
-			if (p.getNextPointByDirection(Direction.NORTH).getPiece() == null) {
+			if (p.getImmediateNextPointOn(Direction.NORTH).getPiece() == null) {
 				ArrayList<Direction> dirs = new ArrayList<>();
 
 				dirs.add(Direction.NORTH);
 				dirs.add(Direction.NORTH);
 				dirs.add(Direction.EAST);
 				
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 
 				dirs.clear();
 				dirs.add(Direction.NORTH);
 				dirs.add(Direction.NORTH);
 				dirs.add(Direction.WEST);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 
 		}
 		try {
-			if (p.getNextPointByDirection(Direction.EAST).getPiece() == null) {
+			if (p.getImmediateNextPointOn(Direction.EAST).getPiece() == null) {
 				ArrayList<Direction> dirs = new ArrayList<>();
 
 				dirs.add(Direction.EAST);
 				dirs.add(Direction.EAST);
 				dirs.add(Direction.NORTH);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 
 				dirs.clear();
 				dirs.add(Direction.EAST);
 				dirs.add(Direction.EAST);
 				dirs.add(Direction.SOUTH);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 
 		}
 		try {
-			if (p.getNextPointByDirection(Direction.SOUTH).getPiece() == null) {
+			if (p.getImmediateNextPointOn(Direction.SOUTH).getPiece() == null) {
 				ArrayList<Direction> dirs = new ArrayList<>();
 
 				dirs.add(Direction.SOUTH);
 				dirs.add(Direction.SOUTH);
 				dirs.add(Direction.EAST);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 
 				dirs.clear();
 				dirs.add(Direction.SOUTH);
 				dirs.add(Direction.SOUTH);
 				dirs.add(Direction.WEST);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 
 		}
 		try {
-			if (p.getNextPointByDirection(Direction.WEST).getPiece() == null) {
+			if (p.getImmediateNextPointOn(Direction.WEST).getPiece() == null) {
 				ArrayList<Direction> dirs = new ArrayList<>();
 
 				dirs.add(Direction.WEST);
 				dirs.add(Direction.WEST);
 				dirs.add(Direction.SOUTH);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 
 				dirs.clear();
 				dirs.add(Direction.WEST);
 				dirs.add(Direction.WEST);
 				dirs.add(Direction.NORTH);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 

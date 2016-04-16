@@ -1,30 +1,29 @@
-package Executable;
+package Executable.ObjectModel;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
-import Executable.BoardModel.Point;
-import Executable.PieceModel.Piece;
+import Executable.BoardModel.*;
+import Executable.PieceModel.*;
 
 public class Node implements Serializable {
 	State state;
-	String causingMove;
-	int movedFromPointId;
-	int movedToPointId;
+	public Move causingMove;
+	public int movedFromPointId;
+	public int movedToPointId;
 	Node parent;
 	int depth;
 	int pathCost;
 
 	public Node(Map<Integer, Integer> s, String side) {
 		state = new State(s, side);
-		causingMove = "";
+		causingMove = null;
 		parent = null;
 		depth = 0;
 		pathCost = 0;
 	}
 
-	public Node(Map<Integer, Integer> s, String side, int fromPointId, int toPointointId, String move, Node parentNode) {
+	public Node(Map<Integer, Integer> s, String side, int fromPointId, int toPointointId, Move move, Node parentNode) {
 		state = new State(s, side);
 		movedFromPointId = fromPointId;
 		movedToPointId = toPointointId;

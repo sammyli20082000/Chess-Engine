@@ -20,11 +20,11 @@ public class Elephant extends Piece {
 			dirs.add(Direction.NORTH);
 			dirs.add(Direction.EAST);
 
-			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+			if (p.getImmediateNextPointOnCombining(dirs).getPiece() == null) {
 				dirs.add(Direction.NORTH);
 				dirs.add(Direction.EAST);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 
@@ -34,11 +34,11 @@ public class Elephant extends Piece {
 			dirs.add(Direction.SOUTH);
 			dirs.add(Direction.EAST);
 
-			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+			if (p.getImmediateNextPointOnCombining(dirs).getPiece() == null) {
 				dirs.add(Direction.SOUTH);
 				dirs.add(Direction.EAST);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 
@@ -48,11 +48,11 @@ public class Elephant extends Piece {
 			dirs.add(Direction.NORTH);
 			dirs.add(Direction.WEST);
 
-			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+			if (p.getImmediateNextPointOnCombining(dirs).getPiece() == null) {
 				dirs.add(Direction.NORTH);
 				dirs.add(Direction.WEST);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 
@@ -62,11 +62,11 @@ public class Elephant extends Piece {
 			dirs.add(Direction.SOUTH);
 			dirs.add(Direction.WEST);
 
-			if (p.getNextPointByDirectionList(dirs).getPiece() == null) {
+			if (p.getImmediateNextPointOnCombining(dirs).getPiece() == null) {
 				dirs.add(Direction.SOUTH);
 				dirs.add(Direction.WEST);
 
-				validMoves.add(p.getNextPointByDirectionList(dirs));
+				validMoves.add(p.getImmediateNextPointOnCombining(dirs));
 			}
 		} catch (Exception e) {
 

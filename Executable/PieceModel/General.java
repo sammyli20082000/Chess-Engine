@@ -17,22 +17,22 @@ public class General extends Piece {
 		ArrayList<Point> validMoves = new ArrayList<>();
 
 		try {
-			validMoves.add(p.getNextPointByDirection(Direction.EAST));
+			validMoves.add(p.getImmediateNextPointOn(Direction.EAST));
 		} catch (Exception e) {
 
 		}
 		try {
-			validMoves.add(p.getNextPointByDirection(Direction.SOUTH));
+			validMoves.add(p.getImmediateNextPointOn(Direction.SOUTH));
 		} catch (Exception e) {
 
 		}
 		try {
-			validMoves.add(p.getNextPointByDirection(Direction.WEST));
+			validMoves.add(p.getImmediateNextPointOn(Direction.WEST));
 		} catch (Exception e) {
 
 		}
 		try {
-			validMoves.add(p.getNextPointByDirection(Direction.NORTH));
+			validMoves.add(p.getImmediateNextPointOn(Direction.NORTH));
 		} catch (Exception e) {
 
 		}

@@ -1,7 +1,6 @@
-package Executable;
+package Executable.ObjectModel;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 
 import Executable.BoardModel.Point;
 
