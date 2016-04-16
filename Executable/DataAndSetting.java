@@ -1,8 +1,15 @@
 package Executable;
+<<<<<<< HEAD
 import java.io.File;
+=======
+
+import java.io.File;
+
+
 import Executable.BoardModel.*;
 import Executable.PieceModel.*;
 public class DataAndSetting {
+
 public static String localDir = getLocalDir();
 public static String getLocalDir() {
 String s;
